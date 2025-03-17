@@ -1,10 +1,90 @@
 .App {
   text-align: center;
+  color: #1f3a8a;
+  background: #d4d5d6;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.BasDePage {
+  width: 100%;
+}
+
+.INSA-logo {
+  height:2.5rem;
+  float:right;
+}
+
+.Inventory-row {
+  display: flex;
+}
+
+.Inventory-cell {
+  width:25%
+}
+
+.Inventory-input {
+  background: #172b66;
+  color: #a6a6a6;
+  border-radius: 10px;
+  border-color: #172b66;
+  width: 100%;
+  margin-top: 3%;
+}
+
+.Inventory-input-button {
+  margin-top: 3%;
+  border-radius: 25px;
+  background: #eff3f7;
+  color: #1f3a8a;
+  width: 33%;
+}
+
+
+.Bouton-tableau {
+  border-radius: 25px;
+  background: #1F3A8A;
+  color: #fff;
+  width: 33%;
+}
+
+.Ajoute-produit {
+  flex:30%;
+  border-radius: 25px;
+  background: #1F3A8A;
+  padding: 20px;
+  height: 100%;
+  color:#fff;
+  margin: 10px;
+}
+
+.Tableau-et-boutons {
+  margin:10px;
+  padding: 20px;
+  border-radius: 25px;
+  background: #fff;
+  flex:70%;
+  display:table;
+  min-height: 100%;
+}
+
+.Partie-fonctionnelle {
+  display: flex; 
+  height: 100%;
+}
+
+
+.Boutons-en-bas {
+  min-height:1%;
+  padding: 15px;
+  display: flex;
+}
+
+.Tableau {
+  min-height: 90%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
