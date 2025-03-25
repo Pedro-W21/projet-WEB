@@ -2,41 +2,71 @@ import logo from './logo.svg';
 import image_logo_insa from './logo-ng.png'
 import './App.css';
 
+
+import React from 'react';
+import axios from 'axios';
+import InventoryTable from './components/InventoryTable';
+import AddItemForm from './components/AddItemForm';
+
 function App() {
+  const [items, setItems] = React.useState([]);
+  const [showAddForm, setShowAddForm] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+
+  const fetchInventory = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/inventory');
+      setItems(response.data);
+    } catch (error) {
+      console.error('Error fetching inventory:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const real_items = items.map((item) => ({
+        name:item.name,
+        quantity: item.quantity,
+        bestBy: item.bestBy
+      }));
+      await axios.post('http://localhost:3000/api/inventory', real_items);
+      alert('Inventory saved successfully!');
+    } catch (error) {
+      console.error('Error saving inventory:', error);
+      alert('Error saving inventory. Please try again.');
+    }
+  };
+
+  const handleAddItem = (item) => {
+    setItems([...items, item]);
+    setShowAddForm(false);
+  };
+
   return (
     <div className="App">
       <div>
         <h1>INSApprovisionnement</h1>
       </div>
-      <div class = "Partie-fonctionnelle">
-        <div class="Ajoute-produit">
-          <h2>Ajouter Produit</h2>
-          <input class="Inventory-input" type="text" value="Nom du produit"></input>
-          <input class="Inventory-input" type="number" value="1"></input>
-          <input class="Inventory-input" type="date" value="Date de péremption"></input>
-          <button class="Inventory-input-button">Entrer</button>
+      <div className = "Partie-fonctionnelle">
+        <div className="Ajoute-produit">
+          <AddItemForm onSubmit={handleAddItem} onCancel={handleAddItem}/>
         </div>
-        <div class="Tableau-et-boutons">
-          <div class="Tableau">
-           <h2>L'inventaire</h2>
-           <div class="Inventory-row">
-            <h3 class="Inventory-cell">Produit</h3>
-            <h3 class="Inventory-cell">Quantité</h3>
-            <h3 class="Inventory-cell">Date de péremption</h3>
-           </div>
-          </div>
-          <div class = "Boutons-en-bas">
-            <button class="Bouton-tableau">
-              Sauvegarder
+        <div className="Tableau-et-boutons">
+          <InventoryTable items={items} setItems={setItems} loading={loading} />
+          <div className = "Boutons-en-bas">
+            <button className="Bouton-tableau" onClick={handleSave}>
+              Sauvegarder 
             </button>
-            <button class="Bouton-tableau">
+            <button className="Bouton-tableau" onClick={fetchInventory}>
               Version la plus récente
             </button>
           </div>
         </div>
       </div>
-      <header class="App-header">
-        <img src={logo} class="App-logo" alt="logo" />
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -49,7 +79,7 @@ function App() {
           Learn React
         </a>
       </header>
-      <footer class="BasDePage">
+      <footer className="BasDePage">
         <img src={image_logo_insa} alt="logo INSA" className="INSA-logo"/>
       </footer>
     </div>

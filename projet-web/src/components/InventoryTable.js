@@ -1,0 +1,84 @@
+import React from 'react';
+
+function InventoryTable({ items, setItems, loading }) {
+  const isItemCritical = (item) => {
+    if (item.quantity <= 2) return true;
+    if (item.bestBy != null) {
+      const now = new Date();
+      const bestBy = new Date(item.bestBy);
+      const diffTime = bestBy - now;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays <= 2;
+    }
+    return false;
+  };
+
+  const handleQuantityChange = (itemId, newQuantity) => {
+    setItems(items.map(item => 
+      item._id === itemId ? { ...item, quantity: parseInt(newQuantity) } : item
+    ));
+  };
+
+  const handleRemoveItem = (itemId) => {
+    setItems(items.filter(item => item._id !== itemId));
+  };
+
+  const createDateString = (date_str) => {
+    if (date_str == null) {
+      return "N/A"
+    }
+    else {
+      const date = new Date(date_str)
+      /* volé de https://www.geeksforgeeks.org/how-to-format-javascript-date-as-yyyy-mm-dd/ */
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+      /* FIN volé de */
+    }
+  };
+
+  return (
+    <div className="Tableau">
+      <h2>Inventaire</h2>
+      <div>
+        <table className="fixed_header">
+          <thead>
+            <tr>
+              <th className="Inventory-cell">Nom</th>
+              <th className="Inventory-cell">Quantité</th>
+              <th className="Inventory-cell">Date de péremption</th>
+              <th className="Inventory-cell">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="Tableau-inventaire">
+            {items.map((item) => (
+              <tr key={item._id} className={isItemCritical(item) ? 'critical' : ''}>
+                <td className="Inventory-cell">{item.name}</td>
+                <td className="Inventory-cell">
+                  <input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => handleQuantityChange(item._id, e.target.value)}
+                    min="0"
+                    className="Inventory-change-input"
+                  />
+                </td>
+                <td className="Inventory-cell">
+                  {createDateString(item.bestBy)}
+                </td>
+                <td className="Inventory-cell">
+                  <button onClick={() => handleRemoveItem(item._id)} className="Bouton-tableau">
+                    Enlever
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export default InventoryTable;
