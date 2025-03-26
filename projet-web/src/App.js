@@ -39,8 +39,24 @@ function App() {
     }
   };
 
-  const handleAddItem = (item) => {
-    setItems([...items, item]);
+  const handleAddItem = (newItem) => {
+    setItems((prevItems) => {
+      //cherche s'il existe déjà un élément avec le même nom ET la même date de péremption, pour les combiner
+      const existingItem = prevItems.find(
+        (item) => item.name === newItem.name && item.bestBy === newItem.bestBy
+      );
+      if (existingItem) {
+        //si un élément comme ça existe, on met à jour sa quantité pour prendre en compte celle qu'on ajoute
+        return prevItems.map((item) =>
+          item === existingItem
+            ? { ...item, quantity: String(Number(item.quantity) + Number(newItem.quantity)) } // On additionne les quantités
+            : item
+        );
+      } else {
+        //sinon, le nouvel ingrédient est ajouté normalement
+        return [...prevItems, newItem];
+      }
+    });
     setShowAddForm(false);
   };
 
