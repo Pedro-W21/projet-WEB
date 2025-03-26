@@ -93,6 +93,7 @@ width: 200px;
   background: #1F3A8A;
   color: #fff;
   min-width: 33%;
+  border: 3px solid rgb(179, 181, 182);
 }
 
 .critical {
@@ -130,6 +131,8 @@ width: 200px;
   min-height:1%;
   padding: 15px;
   display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 .Tableau {
