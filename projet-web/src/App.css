@@ -54,6 +54,13 @@
   max-width: 50%;
 }
 
+
+
+#search-bar {
+  width: 50%;
+  text-align: left;
+}
+
 /* ISSU de : https://vembarrajan.medium.com/html-css-tricks-scroll-able-table-body-tbody-d23182ae0fbc*/
 .fixed_header{
   table-layout: fixed;

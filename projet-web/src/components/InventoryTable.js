@@ -1,7 +1,11 @@
-import React from 'react';
+import React from "react";
 
 function InventoryTable({ items, setItems, loading }) {
+
+  const [shown_items, setShowItems] = React.useState([]);
+  
   const isItemCritical = (item) => {
+
     if (item.quantity <= 2) return true;
     if (item.bestBy != null) {
       const now = new Date();
@@ -17,11 +21,33 @@ function InventoryTable({ items, setItems, loading }) {
     setItems(items.map(item => 
       item._id === itemId ? { ...item, quantity: parseInt(newQuantity) } : item
     ));
+
+    updateShownItems(null);
   };
 
   const handleRemoveItem = (itemId) => {
     setItems(items.filter(item => item._id !== itemId));
+    updateShownItems(null);
   };
+
+  
+
+  const updateShownItems = (update) => {
+    const search_input = document.querySelector("#search-bar");
+    if (search_input != null) {
+      let value = search_input.value ?? "";
+      let new_shown = items.filter(item => (item.name.toLowerCase()).includes(value.toLowerCase()));
+      if (!(value !== "" && new_shown.length == 0 && shown_items.length == 0)) {
+
+        setShowItems(new_shown);
+      }
+    } 
+    
+  };
+
+  if (shown_items.length == 0 && items.length > 0) {
+    updateShownItems(null);
+  }
 
   const createDateString = (date_str) => {
     if (date_str == null) {
@@ -42,7 +68,9 @@ function InventoryTable({ items, setItems, loading }) {
     <div className="Tableau">
       <h2>Inventaire</h2>
       <div>
+        <input className="Inventory-change-input" onChange={(e) => updateShownItems(e)} id="search-bar" placeholder="Barre de recherche"></input>
         <table className="fixed_header">
+          
           <thead>
             <tr>
               <th className="Inventory-cell">Nom</th>
@@ -52,7 +80,7 @@ function InventoryTable({ items, setItems, loading }) {
             </tr>
           </thead>
           <tbody className="Tableau-inventaire">
-            {items.map((item) => (
+            {shown_items.map((item) => (
               <tr key={item._id} className={isItemCritical(item) ? 'critical' : ''}>
                 <td className="Inventory-cell">{item.name}</td>
                 <td className="Inventory-cell">
