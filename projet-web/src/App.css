@@ -2,6 +2,7 @@
   text-align: center;
   color: #1f3a8a;
   background: #d4d5d6;
+  min-height: 100%;
 }
 
 .App-logo {
@@ -24,8 +25,7 @@
 }
 
 .Inventory-cell {
-  width:25%;
-  
+  width:25%;  
 }
 
 .Inventory-input {
@@ -94,6 +94,11 @@ width: 200px;
   color: #fff;
   min-width: 33%;
   border: 3px solid rgb(179, 181, 182);
+  cursor: pointer;
+}
+
+.Bouton-tableau:hover {
+  background-color: #78a8eb;
 }
 
 .critical {
@@ -106,7 +111,8 @@ width: 200px;
   border-radius: 25px;
   background: #1F3A8A;
   padding: 20px;
-  height: 100%;
+  min-height: 90%;
+  max-height: 90%;
   color:#fff;
   margin: 10px;
 }
@@ -134,6 +140,7 @@ width: 200px;
   justify-content: center;
   gap: 20px;
 }
+
 
 .Tableau {
   min-height: 90%;
