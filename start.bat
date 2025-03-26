@@ -6,9 +6,20 @@ cd projet-web-backend
 npm install
 cd ..
 
+$myLabel = 'MyImportantScript'
+$argList = @(
+    '-NoLogo'
+    '-NoProfile'
+    '-NoExit'
+    '-Command "node projet-web-backend/index.js"'
+    "-CustomPipeName '$myLabel'"
+)
 
+Start-Process -FilePath 'powershell.exe' -ArgumentList $argList
 
 cd projet-web
 npm install
 
 npm start
+
+cd ..
