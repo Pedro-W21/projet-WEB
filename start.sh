@@ -8,6 +8,8 @@ cd ..
 
 
 bash -c "exec -a backend_insapp node projet-web-backend/index.js" &
+# Start-Process -NoNewWindow -ArgumentList "node", "projet-web-backend/index.js" -WorkingDirectory "C:\path\to\your\project" -PassThru | ForEach-Object { $_.Id = "backend_insapp" }
+
 
 cd projet-web
 npm install
