@@ -25,3 +25,13 @@
 - système de comptes liés à des collocs particulières (difficile et faut bien gérer la partie sécurité)
 - le site s'adapte à la fréquence à laquelle on consomme les produits en inventaire
 - possibilité de lier une BDD de recettes pour savoir ce qu'on peut faire avec les produits en inventaire (ou ce qu'il manque pour faire une recette donnée !)
+
+
+
+## Point 26/03
+ce qu'il reste à faire :
+- script de lancement/fin fini pour windows
+- Génération de recette (Sofia y est déjà)
+- barre de recherche rapide dans la BDD
+- génération de liste de courses
+- améliorer le rendu de la frontend (avoir tout qui s'aligne bien + couleurs différentes pour différents niveaux de criticité des produits + produits critiques en premier)
