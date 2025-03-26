@@ -4,7 +4,7 @@ function InventoryTable({ items, setItems, loading }) {
 
   const [shown_items, setShowItems] = React.useState([]);
   
-  /*const isItemCritical = (item) => {
+  const isItemCritical = (item) => {
 
     if (item.quantity <= 2) return true;
     if (item.bestBy != null) {
@@ -96,8 +96,8 @@ function InventoryTable({ items, setItems, loading }) {
             </tr>
           </thead>
           <tbody className="Tableau-inventaire">
-            {shown_items.map((item) => (
-              <tr key={item._id} className={getItemCriticity(item)}>
+            {items.map((item) => (
+              <tr key={item._id} className={isItemCritical(item) ? 'critical' : ''}>
                 <td className="Inventory-cell">{item.name}</td>
                 <td className="Inventory-cell">
                   <input
