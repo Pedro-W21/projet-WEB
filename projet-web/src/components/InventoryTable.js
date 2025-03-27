@@ -1,6 +1,21 @@
-import React from 'react';
+import React from "react";
 
 function InventoryTable({ items, setItems, loading }) {
+
+  const [shown_items, setShowItems] = React.useState([]);
+  
+  const isItemCritical = (item) => {
+
+    if (item.quantity <= 2) return true;
+    if (item.bestBy != null) {
+      const now = new Date();
+      const bestBy = new Date(item.bestBy);
+      const diffTime = bestBy - now;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays <= 2;
+    }
+    return false;
+  };
   const getItemCriticity = (item) => {
     if (item.quantity == 0) return "expired_or_none"; //Rouge foncé (car il n'y en a plus)
     if (item.bestBy != null) {
@@ -12,6 +27,7 @@ function InventoryTable({ items, setItems, loading }) {
       if (diffDays < 0) return "expired_or_none"; // Rouge foncé (car périmé)
       if (diffDays <= 1) return "critical"; // Rouge (car 1 jour ou moins)
       if (diffDays <= 3) return "warning"; // Orange (car 3 jours ou moins)
+      
     }
     return "";
   }
@@ -20,11 +36,33 @@ function InventoryTable({ items, setItems, loading }) {
     setItems(items.map(item => 
       item._id === itemId ? { ...item, quantity: parseInt(newQuantity) } : item
     ));
+
+    updateShownItems(null);
   };
 
   const handleRemoveItem = (itemId) => {
     setItems(items.filter(item => item._id !== itemId));
+    updateShownItems(null);
   };
+
+  
+
+  const updateShownItems = (update) => {
+    const search_input = document.querySelector("#search-bar");
+    if (search_input != null) {
+      let value = search_input.value ?? "";
+      let new_shown = items.filter(item => (item.name.toLowerCase()).includes(value.toLowerCase()));
+      if (!(value !== "" && new_shown.length == 0 && shown_items.length == 0)) {
+
+        setShowItems(new_shown);
+      }
+    } 
+    
+  };
+
+  if (shown_items.length == 0 && items.length > 0) {
+    updateShownItems(null);
+  }
 
   const createDateString = (date_str) => {
     if (date_str == null) {
@@ -45,7 +83,9 @@ function InventoryTable({ items, setItems, loading }) {
     <div className="Tableau">
       <h2>Inventaire</h2>
       <div>
+        <input className="Inventory-change-input" onChange={(e) => updateShownItems(e)} id="search-bar" placeholder="Barre de recherche"></input>
         <table className="fixed_header">
+          
           <thead>
             <tr>
               <th className="Inventory-cell">Nom</th>
