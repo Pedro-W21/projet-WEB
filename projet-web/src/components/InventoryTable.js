@@ -2,7 +2,7 @@ import React from "react";
 
 function InventoryTable({ items, setItems, loading }) {
 
-  const [shown_items, setShowItems] = React.useState([]);
+  const [shown_items, setShowItems] = React.useState(items.slice());
   
   const getItemCriticity = (item) => {
     if (item.quantity == 0) return "expired_or_none"; //Rouge foncé (car il n'y en a plus)
@@ -40,8 +40,10 @@ function InventoryTable({ items, setItems, loading }) {
       let value = search_input.value ?? "";
       let new_shown = items.filter(item => (item.name.toLowerCase()).includes(value.toLowerCase()));
       setShowItems(new_shown);
-      console.log(new_shown);
     } 
+    else {
+      setShowItems(items);
+    }
     
   };
 
@@ -57,6 +59,19 @@ function InventoryTable({ items, setItems, loading }) {
       const day = String(date.getDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
       /* FIN volé de */
+    }
+  };
+
+  const getShownItems = () => {
+
+    const search_input = document.querySelector("#search-bar");
+    if (search_input != null) {
+      let value = search_input.value ?? "";
+      let new_shown = items.filter(item => (item.name.toLowerCase()).includes(value.toLowerCase()));
+      return new_shown
+    }
+    else {
+      return items.slice()
     }
   };
 
@@ -76,7 +91,7 @@ function InventoryTable({ items, setItems, loading }) {
             </tr>
           </thead>
           <tbody className="Tableau-inventaire">
-            {items.map((item) => (
+            {getShownItems().map((item) => (
               <tr key={item._id} className={getItemCriticity(item)}>
                 <td className="Inventory-cell">{item.name}</td>
                 <td className="Inventory-cell">
