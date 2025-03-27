@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import image_logo_insa from './logo-ng.png'
 import './App.css';
 

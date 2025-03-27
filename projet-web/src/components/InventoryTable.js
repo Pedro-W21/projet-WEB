@@ -20,6 +20,21 @@ function InventoryTable({ items, setItems, loading }) {
     return "";
   }
 
+  const sortItems = (items) => {
+    const priority = {
+      expired_or_none: 0,
+      critical: 1,
+      warning: 2,
+      "": 3 // pour les items normaux qui ne sont pas critiques encore
+    };
+  
+    return [...items].sort((a, b) => {
+      const aClass = getItemCriticity(a);
+      const bClass = getItemCriticity(b);
+      return priority[aClass] - priority[bClass];
+    });
+  };
+
   const handleQuantityChange = (itemId, newQuantity) => {
     setItems(items.map(item => 
       item._id === itemId ? { ...item, quantity: parseInt(newQuantity) } : item
@@ -83,7 +98,7 @@ function InventoryTable({ items, setItems, loading }) {
             </tr>
           </thead>
           <tbody className="Tableau-inventaire">
-            {items.map((item) => (
+            {sortItems(items).map((item) => (
               <tr key={item._id} className={getItemCriticity(item)}>
                 <td className="Inventory-cell">{item.name}</td>
                 <td className="Inventory-cell">
