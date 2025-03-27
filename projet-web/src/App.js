@@ -11,6 +11,7 @@ function App() {
   const [items, setItems] = React.useState([]);
   const [showAddForm, setShowAddForm] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
+  const [showPopup, setShowPopup] = React.useState(false);
 
   const fetchInventory = async () => {
     try {
@@ -59,6 +60,14 @@ function App() {
     setShowAddForm(false);
   };
 
+  const handleRecettesClick = () => {
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <div className="App">
       <div>
@@ -77,9 +86,28 @@ function App() {
             <button className="Bouton-tableau" onClick={fetchInventory}>
               Version la plus récente
             </button>
+            <button className="Bouton-tableau" onClick={handleRecettesClick}>
+              Vos recettes
+            </button>
           </div>
         </div>
       </div>
+      {showPopup && (
+      <>
+      <div className="popup-overlay" onClick={closePopup}></div>
+        <div className="popup">
+          <div className="popup-content">
+            <h2>Recettes Disponibles</h2>
+              <ul>
+                <li>Recette 1: Salade de fruits</li>
+                <li>Recette 2: Soupe aux légumes</li>
+                <li>Recette 3: Pâtes à la tomate</li>
+              </ul>
+            <button onClick={closePopup}>Fermer</button>   
+          </div>
+        </div>
+      </>
+      )}
       <footer className="BasDePage">
         <img src={image_logo_insa} alt="logo INSA" className="INSA-logo"/>
       </footer>
