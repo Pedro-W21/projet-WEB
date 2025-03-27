@@ -1,0 +1,55 @@
+{
+    "Croque-monsieur":{
+        "Temps de préparation": "10 min",
+        "Temps de cuisson": "10 min",
+        "ingrédients": [
+            "pain de mie",
+            "jambon",
+            "fromage",
+            "crème fraîche"
+        ]
+    },
+    "Pâtes bolognaise":{
+        "Temps de préparation": "15 min",
+        "Temps de cuisson": "30 min",
+        "ingrédients": [
+            "pâtes",
+            "steak haché",
+            "coulis de tomate",
+            "oignon"
+        ]
+    },
+    "Risotto à la courgette":{
+        "Temps de préparation": "30 min",
+        "Temps de cuisson": "30 min",
+        "ingrédients": [
+            "riz",
+            "courgette",
+            "échalotte",
+            "fromage",
+            "bouillon"
+        ]
+    },
+    "Salade de pommes de terre et saumon":{
+        "Temps de préparation": "15 min",
+        "Temps de cuisson": "20 min",
+        "ingrédients": [
+            "pomme de terre",
+            "courgette",
+            "échalotte",
+            "saumon"
+        ]
+    },
+    "Salade niçoise":{
+        "Temps de préparation": "25 min",
+        "Temps de cuisson": "1 min",
+        "ingrédients": [
+            "tomate cerise",
+            "concombre",
+            "oignon",
+            "oeuf",
+            "olive",
+            "anchois"
+        ]
+    }
+}
