@@ -16,7 +16,6 @@ function InventoryTable({ items, setItems, loading }) {
     }
     return false;
   };
-  */
   const getItemCriticity = (item) => {
     if (item.quantity == 0) return "expired_or_none"; //Rouge foncé (car il n'y en a plus)
     if (item.bestBy != null) {
@@ -97,7 +96,7 @@ function InventoryTable({ items, setItems, loading }) {
           </thead>
           <tbody className="Tableau-inventaire">
             {items.map((item) => (
-              <tr key={item._id} className={isItemCritical(item) ? 'critical' : ''}>
+              <tr key={item._id} className={getItemCriticity(item)}>
                 <td className="Inventory-cell">{item.name}</td>
                 <td className="Inventory-cell">
                   <input
