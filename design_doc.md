@@ -35,3 +35,10 @@ ce qu'il reste à faire :
 - barre de recherche rapide dans la BDD
 - génération de liste de courses
 - améliorer le rendu de la frontend (avoir tout qui s'aligne bien + couleurs différentes pour différents niveaux de criticité des produits + produits critiques en premier)
+
+## Point 27/03
+Nouvelles idées :
+- autocomplete dans le rajout de produit pour des produits déjà rajoutés
+- accessibilité sur téléphone
+- pouvoir uploader une photo et faire un call à une API pour lire les codes barres (très compliqué à part si on trouve quelque chose qui fait ça direct)
+- authentification par turne (penser à un cookie pour garder la turne connectée et les items)
