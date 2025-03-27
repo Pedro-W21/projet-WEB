@@ -5,6 +5,7 @@
   min-height: 100%;
   display: grid;
   align-self: start;
+  justify-self: start;
 }
 
 .App-logo {
