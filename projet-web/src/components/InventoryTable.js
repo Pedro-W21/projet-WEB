@@ -4,18 +4,6 @@ function InventoryTable({ items, setItems, loading }) {
 
   const [shown_items, setShowItems] = React.useState([]);
   
-  const isItemCritical = (item) => {
-
-    if (item.quantity <= 2) return true;
-    if (item.bestBy != null) {
-      const now = new Date();
-      const bestBy = new Date(item.bestBy);
-      const diffTime = bestBy - now;
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays <= 2;
-    }
-    return false;
-  };
   const getItemCriticity = (item) => {
     if (item.quantity == 0) return "expired_or_none"; //Rouge foncé (car il n'y en a plus)
     if (item.bestBy != null) {
