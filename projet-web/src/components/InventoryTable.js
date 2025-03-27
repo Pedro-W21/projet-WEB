@@ -3,7 +3,7 @@ import React from "react";
 function InventoryTable({ items, setItems, loading }) {
 
   const [shown_items, setShowItems] = React.useState([]);
-
+  
   const getItemCriticity = (item) => {
     if (item.quantity == 0) return "expired_or_none"; //Rouge foncé (car il n'y en a plus)
     if (item.bestBy != null) {
