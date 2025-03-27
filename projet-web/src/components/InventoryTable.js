@@ -2,7 +2,7 @@ import React from "react";
 
 function InventoryTable({ items, setItems, loading }) {
 
-  const [shown_items, setShowItems] = React.useState([]);
+  const [shown_items, setShowItems] = React.useState(items.slice());
   
   const getItemCriticity = (item) => {
     if (item.quantity == 0) return "expired_or_none"; //Rouge foncé (car il n'y en a plus)
@@ -39,7 +39,6 @@ function InventoryTable({ items, setItems, loading }) {
     setItems(items.map(item => 
       item._id === itemId ? { ...item, quantity: parseInt(newQuantity) } : item
     ));
-
     updateShownItems(null);
   };
 
@@ -55,17 +54,13 @@ function InventoryTable({ items, setItems, loading }) {
     if (search_input != null) {
       let value = search_input.value ?? "";
       let new_shown = items.filter(item => (item.name.toLowerCase()).includes(value.toLowerCase()));
-      if (!(value !== "" && new_shown.length == 0 && shown_items.length == 0)) {
-
-        setShowItems(new_shown);
-      }
+      setShowItems(new_shown);
     } 
+    else {
+      setShowItems(items);
+    }
     
   };
-
-  if (shown_items.length == 0 && items.length > 0) {
-    updateShownItems(null);
-  }
 
   const createDateString = (date_str) => {
     if (date_str == null) {
@@ -79,6 +74,19 @@ function InventoryTable({ items, setItems, loading }) {
       const day = String(date.getDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
       /* FIN volé de */
+    }
+  };
+
+  const getShownItems = () => {
+
+    const search_input = document.querySelector("#search-bar");
+    if (search_input != null) {
+      let value = search_input.value ?? "";
+      let new_shown = items.filter(item => (item.name.toLowerCase()).includes(value.toLowerCase()));
+      return new_shown
+    }
+    else {
+      return items.slice()
     }
   };
 
@@ -98,7 +106,7 @@ function InventoryTable({ items, setItems, loading }) {
             </tr>
           </thead>
           <tbody className="Tableau-inventaire">
-            {sortItems(items).map((item) => (
+            {sortItems(getShownItems()).map((item) => (
               <tr key={item._id} className={getItemCriticity(item)}>
                 <td className="Inventory-cell">{item.name}</td>
                 <td className="Inventory-cell">
