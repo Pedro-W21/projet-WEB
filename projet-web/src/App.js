@@ -67,7 +67,7 @@ function App() {
       </div>
       <div className = "Partie-fonctionnelle">
         <div className="Ajoute-produit">
-          <AddItemForm onSubmit={handleAddItem} onCancel={handleAddItem}/>
+          <AddItemForm items={items} onSubmit={handleAddItem} onCancel={handleAddItem}/>
         </div>
         <div className="Tableau-et-boutons">
           <InventoryTable items={items} setItems={setItems} loading={loading} />
