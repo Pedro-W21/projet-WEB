@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const InventoryItem = require('./models/InventoryItem');
-const GroupData = require('./models/GroupData')
+const GroupData = require('./models/GroupData');
+const recettes = require('./recettes.json');
 
 const app = express();
 const port = process.env.PORT || 3001;
