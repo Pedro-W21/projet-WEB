@@ -65,9 +65,22 @@
 }
 
 #search-bar {
-  width: 50%;
+  width: 100%;
   text-align: left;
+  height: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1.5px solid lightgrey;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0px 0px 20px -18px;
 }
+
+#search-bar:hover {
+  border: 2px solid lightgrey;
+  box-shadow: 0px 0px 20px -17px;
+}
+
 
 /* ISSU de : https://vembarrajan.medium.com/html-css-tricks-scroll-able-table-body-tbody-d23182ae0fbc*/
 .fixed_header{
@@ -104,11 +117,17 @@ width: 200px;
 /* FIN ISSU DE*/
 
 .Bouton-tableau {
-  border-radius: 25px;
   background: #1F3A8A;
   color: #fff;
   min-width: 33%;
   cursor: pointer;
+  height:25px;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  outline: none;
+
 }
 
 .Bouton-tableau:hover {
