@@ -4,8 +4,6 @@
   background: #d4d5d6;
   min-height: 100%;
   display: grid;
-  align-self: start;
-  justify-self: start;
 }
 
 .App-logo {
@@ -86,6 +84,7 @@
 .fixed_header{
   table-layout: fixed;
   border-collapse: collapse;
+  width:100%
 }
 
 .fixed_header tbody{
@@ -105,13 +104,13 @@ height: 50vh;
 .fixed_header th {
 padding: 5px;
 text-align: center;
-width: 200px;
+width: 300px;
 }
 
 .fixed_header td {
   padding: 5px;
   text-align: center;
-  width: 200px;
+  width: 300px;
   }
 
 /* FIN ISSU DE*/
