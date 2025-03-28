@@ -5,21 +5,18 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
     name: "",
     quantity: 1,
     bestBy: null,
-    group_id:groupID,
-    _id:Date.now()
+    group_id: groupID,
+    _id: Date.now(),
   });
+
+  const [inputValue, setInputValue] = useState(item.name); // Pour l'auto-complétion
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(
-        {
-          name:item.name,
-          quantity:item.quantity,
-          bestBy:item.bestBy,
-          group_id:groupID,
-          _id:Date.now()
-        }
-    );
+    onSubmit({
+      ...item, // Récupère tout l'état item
+      name: inputValue, // Utilise inputValue comme valeur finale de item.name
+    });
   };
 
   const handleChange = (e) => {
@@ -33,35 +30,30 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
   const input = document.querySelector("#date-picker");
   const getNewDate = () => input?.value ?? "";
 
-  //fonction auto-complétion
+  // Fonction d'auto-complétion
   function AutoComplete({ items }) {
-    const [suggestions, setSuggestions] = useState([]); //suggestions filtrées
-    const [inputValue, setInputValue] = useState(""); //stockage temporaire saisie utilisateur
+    const [suggestions, setSuggestions] = useState([]);
 
-    //fonction pour récupérer items filtrés
+    // Fonction pour filtrer les suggestions
     const getShownItems = () => {
-      let value = inputValue ?? ""; //récupère l'entrée utilisateur
-      let filteredItems = items.filter((i) =>
-        i.name.toLowerCase().includes(value.toLowerCase()) //recherche dans bd
+      const value = inputValue ?? "";
+      return items.filter((i) =>
+        i.name.toLowerCase().includes(value.toLowerCase())
       );
-      return filteredItems; //retourne un tableau filtré
     };
 
-    // maj les suggestions en fonction de la saisie utilisateur
     useEffect(() => {
       setSuggestions(getShownItems());
-    }, [inputValue]); // déclenchement sur inputValue
+    }, [inputValue]);
 
-    //maj suggestions et inputvalue
     const handleInputChange = (e) => {
-      const value = e.target.value;
-      setInputValue(value); // Met à jour l'input temporaire
+      setInputValue(e.target.value); // Saisie fluide sans toucher à l’état global
     };
 
     const handleSelectSuggestion = (name) => {
-      setInputValue(name); // Met à jour la saisie visible
-      setItem((prev) => ({ ...prev, name })); // Met à jour l'état global avec la suggestion choisie
-      setSuggestions([]); // Efface les suggestions après la sélection
+      setInputValue(name); // Met à jour l'input visible
+      setItem((prev) => ({ ...prev, name })); // Met aussi à jour l'état global principal
+      setSuggestions([]); // Efface les suggestions après sélection
     };
 
     return (
@@ -70,13 +62,12 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
           className="Inventory-input"
           type="text"
           name="name"
-          value={inputValue} // Lier l'input à inputValue
-          onChange={handleInputChange} // Mettre à jour seulement inputValue
+          value={inputValue} // inputValue permet la saisie fluide
+          onChange={handleInputChange}
           placeholder="Tapez pour rechercher..."
           required
         />
 
-        {/* Affichage dynamique des suggestions */}
         {inputValue && suggestions.length > 0 && (
           <ul className="suggestion-list">
             {suggestions.map((suggestion, index) => (
@@ -99,7 +90,6 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Nom:</label>
-          {/* Utilisation du composant AutoComplete */}
           <AutoComplete items={items} />
         </div>
         <div>
@@ -121,7 +111,9 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
             type="date"
             id="date-picker"
             selected={item.bestBy}
-            onChange={(e) => setItem((prev) => ({ ...prev, bestBy: getNewDate() }))}
+            onChange={(e) =>
+              setItem((prev) => ({ ...prev, bestBy: getNewDate() }))
+            }
           />
         </div>
         <button type="submit" className="Inventory-input-button">
