@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
 
-function AddItemForm({ items, onSubmit, onCancel }) {
+function AddItemForm({ items, onSubmit, onCancel, groupID }) {
   const [item, setItem] = useState({
     name: "",
     quantity: 1,
     bestBy: null,
-    _id: Date.now(),
+    group_id:groupID,
+    _id:Date.now()
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({
-      name: item.name,
-      quantity: item.quantity,
-      bestBy: item.bestBy,
-      _id: Date.now(),
-    });
+    onSubmit(
+        {
+          name:item.name,
+          quantity:item.quantity,
+          bestBy:item.bestBy,
+          group_id:groupID,
+          _id:Date.now()
+        }
+    );
   };
 
   const handleChange = (e) => {

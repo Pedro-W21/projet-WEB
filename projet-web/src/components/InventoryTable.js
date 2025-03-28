@@ -1,6 +1,6 @@
 import React from "react";
 
-function InventoryTable({ items, setItems, loading }) {
+function InventoryTable({ items, setItems, loading, group }) {
 
   const [shown_items, setShowItems] = React.useState(items.slice());
   
@@ -19,6 +19,21 @@ function InventoryTable({ items, setItems, loading }) {
     }
     return "";
   }
+
+  const sortItems = (items_to_sort) => {
+    const priority = {
+      expired_or_none: 0,
+      critical: 1,
+      warning: 2,
+      "": 3 // pour les items normaux qui ne sont pas critiques encore
+    };
+  
+    return [...items_to_sort].sort((a, b) => {
+      const aClass = getItemCriticity(a);
+      const bClass = getItemCriticity(b);
+      return priority[aClass] - priority[bClass];
+    });
+  };
 
   const handleQuantityChange = (itemId, newQuantity) => {
     setItems(items.map(item => 
@@ -77,7 +92,7 @@ function InventoryTable({ items, setItems, loading }) {
 
   return (
     <div className="Tableau">
-      <h2>Inventaire</h2>
+      <h2>Inventaire de {group}</h2>
       <div>
         <input className="Inventory-change-input" onChange={(e) => updateShownItems(e)} id="search-bar" placeholder="Barre de recherche"></input>
         <table className="fixed_header">
@@ -91,7 +106,7 @@ function InventoryTable({ items, setItems, loading }) {
             </tr>
           </thead>
           <tbody className="Tableau-inventaire">
-            {getShownItems().map((item) => (
+            {sortItems(getShownItems()).map((item) => (
               <tr key={item._id} className={getItemCriticity(item)}>
                 <td className="Inventory-cell">{item.name}</td>
                 <td className="Inventory-cell">

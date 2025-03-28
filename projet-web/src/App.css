@@ -130,15 +130,29 @@ width: 200px;
   background: #ef7c43;
 }
 
-.Ajoute-produit {
-  flex:30%;
-  border-radius: 25px;
-  background: #1F3A8A;
-  padding: 20px;
-  min-height: 90%;
-  max-height: 90%;
+.form-column {
+  
   color:#fff;
   margin: 10px;
+  flex:30%;
+  min-height: 90%;
+  max-height: 90%;
+}
+
+.choix-groupe {
+  border-radius: 25px;
+  padding: 20px;
+  background: #1F3A8A;
+  margin:5px;
+  height:30%;
+}
+
+.Ajoute-produit {
+  border-radius: 25px;
+  padding: 20px;
+  background: #1F3A8A;
+  margin:5px;
+  height:63.5%;
 }
 
 .Tableau-et-boutons {
@@ -192,3 +206,48 @@ width: 200px;
   background-color: #cbd0da;
   border-radius: 7px;
 }
+
+/* POPUP CODE */
+
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.popup-content {
+  text-align: left;
+}
+
+.popup button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  background: #1f3a8a;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  float:right ;
+}
+
+.popup button:hover {
+  background: #0056b3;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
