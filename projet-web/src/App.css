@@ -129,15 +129,29 @@ width: 200px;
   background: #ef7c43;
 }
 
-.Ajoute-produit {
-  flex:30%;
-  border-radius: 25px;
-  background: #1F3A8A;
-  padding: 20px;
-  min-height: 90%;
-  max-height: 90%;
+.form-column {
+  
   color:#fff;
   margin: 10px;
+  flex:30%;
+  min-height: 90%;
+  max-height: 90%;
+}
+
+.choix-groupe {
+  border-radius: 25px;
+  padding: 20px;
+  background: #1F3A8A;
+  margin:5px;
+  height:30%;
+}
+
+.Ajoute-produit {
+  border-radius: 25px;
+  padding: 20px;
+  background: #1F3A8A;
+  margin:5px;
+  height:63.5%;
 }
 
 .Tableau-et-boutons {

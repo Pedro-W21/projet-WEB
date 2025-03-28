@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const InventoryItem = require('./models/InventoryItem');
+const GroupData = require('./models/GroupData')
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -15,12 +16,51 @@ mongoose.connect('mongodb://127.0.0.1:27017/inventoryDB?', {
 app.use(express.json());
 
 // Routes
-app.get('/api/inventory', async (req, res) => {
+app.post('/api/group_inventories', async (req, res) => {
     try {
-        const items = await InventoryItem.find();
+        // Delete existing items
+        
+        console.log(req.body.group_id);
+        const items = await InventoryItem.find({group_id:req.body.group_id});
         res.json(items);
     } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Error saving inventory' });
+    }
+});
+
+app.get('/api/inventory', async (req, res) => {
+    try {
+        const items = await InventoryItem.find({group_id:req.params.group_id});
+        console.log(req.params);
+        res.json(items);
+    } catch (err) {
+        console.log(err);
         res.status(500).json({ error: 'Error fetching inventory' });
+    }
+});
+
+app.get('/api/groups', async (req, res) => {
+    try {
+        const groups = await GroupData.find();
+        res.json(groups);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Error fetching inventory' });
+    }
+});
+
+app.post('/api/groups', async (req, res) => {
+    try {
+        // Delete existing items
+        
+        await GroupData.deleteMany();
+        // Insert new items
+        const items = await GroupData.insertMany(req.body);
+        res.json(items);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Error saving inventory' });
     }
 });
 
@@ -32,9 +72,10 @@ app.get('/cors', (req, res) => {
 app.post('/api/inventory', async (req, res) => {
     try {
         // Delete existing items
-        await InventoryItem.deleteMany();
+        
+        await InventoryItem.deleteMany({group_id:req.body.group_id});
         // Insert new items
-        const items = await InventoryItem.insertMany(req.body);
+        const items = await InventoryItem.insertMany(req.body.items);
         res.json(items);
     } catch (err) {
         console.log(err);

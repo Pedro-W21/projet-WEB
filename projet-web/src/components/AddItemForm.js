@@ -1,10 +1,11 @@
 import React from 'react';
 
-function AddItemForm({ onSubmit, onCancel }) {
+function AddItemForm({ onSubmit, onCancel, groupID }) {
   const [item, setItem] = React.useState({
     name: '',
     quantity: 1,
     bestBy: null,
+    group_id:groupID,
     _id:Date.now()
   });
 
@@ -15,6 +16,7 @@ function AddItemForm({ onSubmit, onCancel }) {
           name:item.name,
           quantity:item.quantity,
           bestBy:item.bestBy,
+          group_id:groupID,
           _id:Date.now()
         }
     );
