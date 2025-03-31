@@ -162,6 +162,9 @@ function App() {
               <button className="Bouton-tableau" onClick={handleRecettesClick}>
                 Vos recettes
               </button>
+              <button className="Bouton-tableau" onClick={handleRecettesClick}>
+                Générer une liste de courses
+              </button>
             </div>
           </div>
         </div>

@@ -118,7 +118,7 @@ width: 300px;
 .Bouton-tableau {
   background: #1F3A8A;
   color: #fff;
-  min-width: 33%;
+  min-width: 25%;
   cursor: pointer;
   height:25px;
   border: none;
