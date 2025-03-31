@@ -93,7 +93,7 @@ function InventoryTable({ items, setItems, loading, group }) {
 
   return (
     <div className="Tableau">
-      <h2>Inventaire de {group}</h2>
+      <h2> {(group != "") ? "Inventaire de " : "Veuillez choisir un groupe !"} {group}</h2>
       <div>
         <input className="Inventory-change-input" onChange={(e) => updateShownItems(e)} id="search-bar" placeholder="Barre de recherche"></input>
         <table className="fixed_header">
