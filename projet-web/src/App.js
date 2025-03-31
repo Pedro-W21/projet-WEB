@@ -7,6 +7,7 @@ import axios from 'axios';
 import InventoryTable from './components/InventoryTable';
 import AddItemForm from './components/AddItemForm';
 import ConnectForm from './components/ConnectForm';
+import { CookiesProvider, useCookies } from 'react-cookie'
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -140,48 +141,51 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <h1>INSApprovisionnement</h1>
-      </div>
-      <div className = "Partie-fonctionnelle">
-        <div className="form-column">
-          <ConnectForm onSubmit={handleGroupConnect} onCancel={handleGroupConnect} groupID={groupID} setGroupID={setGroupID} groups={groups} onChange={fetchGroups}/>
-          <AddItemForm items={items} onSubmit={handleAddItem} onCancel={handleAddItem}/>
+      <CookiesProvider>
+        <div>
+          <h1>INSApprovisionnement</h1>
         </div>
-        <div className="Tableau-et-boutons">
-          <InventoryTable items={items} setItems={setItems} loading={loading} group={groupID}/>
-          <div className = "Boutons-en-bas">
-            <button className="Bouton-tableau" onClick={handleSave}>
-              Sauvegarder 
-            </button>
-            <button className="Bouton-tableau" onClick={fetchInventory}>
-              Version la plus récente
-            </button>
-            <button className="Bouton-tableau" onClick={handleRecettesClick}>
-              Vos recettes
-            </button>
+        <div className = "Partie-fonctionnelle">
+          <div className="form-column">
+            <ConnectForm onSubmit={handleGroupConnect} onCancel={handleGroupConnect} groupID={groupID} setGroupID={setGroupID} groups={groups} onChange={fetchGroups}/>
+            <AddItemForm items={items} onSubmit={handleAddItem} onCancel={handleAddItem}/>
+          </div>
+          <div className="Tableau-et-boutons">
+            <InventoryTable items={items} setItems={setItems} loading={loading} group={groupID}/>
+            <div className = "Boutons-en-bas">
+              <button className="Bouton-tableau" onClick={handleSave}>
+                Sauvegarder 
+              </button>
+              <button className="Bouton-tableau" onClick={fetchInventory}>
+                Version la plus récente
+              </button>
+              <button className="Bouton-tableau" onClick={handleRecettesClick}>
+                Vos recettes
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      {showPopup && (
-      <>
-      <div className="popup-overlay" onClick={closePopup}></div>
-        <div className="popup">
-          <div className="popup-content">
-            <h2>Recettes Disponibles</h2>
-              <ul>
-                <li>Recette 1: Salade de fruits</li>
-                <li>Recette 2: Soupe aux légumes</li>
-                <li>Recette 3: Pâtes à la tomate</li>
-              </ul>
-            <button onClick={closePopup}>Fermer</button>   
+        {showPopup && (
+        <>
+        <div className="popup-overlay" onClick={closePopup}></div>
+          <div className="popup">
+            <div className="popup-content">
+              <h2>Recettes Disponibles</h2>
+                <ul>
+                  <li>Recette 1: Salade de fruits</li>
+                  <li>Recette 2: Soupe aux légumes</li>
+                  <li>Recette 3: Pâtes à la tomate</li>
+                </ul>
+              <button onClick={closePopup}>Fermer</button>   
+            </div>
           </div>
-        </div>
-      </>
-      )}
-      <footer className="BasDePage">
-        <img src={image_logo_insa} alt="logo INSA" className="INSA-logo"/>
-      </footer>
+        </>
+        )}
+        <footer className="BasDePage">
+          <img src={image_logo_insa} alt="logo INSA" className="INSA-logo"/>
+        </footer>
+      </CookiesProvider>
+      
     </div>
     
   );
