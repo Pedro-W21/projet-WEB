@@ -288,3 +288,14 @@ width: 300px;
   z-index: 999;
 }
 
+.bouton-scan {
+  margin-top: 3%;
+  border-radius: 50px;
+  background: #ffbde9;
+  color: #ffffff;
+  min-width: 33%;
+}
+
+.bouton-scan:hover {
+  background-color: #bdc7d4;
+}
