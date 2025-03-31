@@ -4,7 +4,7 @@ import './App.css';
 
 import React from 'react';
 import axios from 'axios';
-import InventoryTable from './components/InventoryTable';
+import InventoryTable, { genererListeCourses } from './components/InventoryTable';
 import AddItemForm from './components/AddItemForm';
 import ConnectForm from './components/ConnectForm';
 import { CookiesProvider, useCookies } from 'react-cookie';
@@ -22,6 +22,7 @@ function App() {
   /* Début vol de : https://clerk.com/blog/setting-and-using-cookies-in-react */
   const [cookies, setCookie] = useCookies(['user'])
   /* fin vol de */
+  const [showListeCoursesPopup, setShowListeCoursesPopup] = React.useState(false);
   const [groupID, setGroupID] = React.useState("");
   const [groups, setGroups] = React.useState([]);
 
@@ -159,6 +160,14 @@ function App() {
   const closePopup = () => {
     setShowPopup(false);
   };
+  
+  const handleListeCoursesClick = () => {
+    setShowListeCoursesPopup(true);
+  };
+
+  const closeListeCoursesPopup = () => {
+    setShowListeCoursesPopup(false);
+  };
 
   return (
       <div className="App">
@@ -182,6 +191,9 @@ function App() {
               <button className="Bouton-tableau" onClick={handleRecettesClick}>
                 Vos recettes
               </button>
+              <button className="Bouton-tableau" onClick={handleListeCoursesClick}>
+                Générer une liste de courses
+              </button>
             </div>
           </div>
         </div>
@@ -201,6 +213,23 @@ function App() {
           </div>
         </>
         )}
+        {showListeCoursesPopup && (
+        <>
+        <div className="popup-overlay" onClick={closeListeCoursesPopup}></div>
+          <div className="popup">
+            <div className="popup-content">
+              <h2>Liste de Courses</h2>
+              <ul>
+                {genererListeCourses(items).map((item, index) => (
+                  <li key={index}>{item.nom} - Criticité: {item.criticite}</li>
+                ))}
+              </ul>
+              <button onClick={closeListeCoursesPopup}>Fermer</button>
+            </div>
+          </div>
+        </>
+        )}
+
         <footer className="BasDePage">
           <img src={image_logo_insa} alt="logo INSA" className="INSA-logo"/>
         </footer>
