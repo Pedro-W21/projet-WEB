@@ -89,8 +89,21 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
     }));
   };
 
+  const handleCodeBarre = () => {
+      const popup = window.open(
+      "/barcode_reader2.html", 
+      "PopupScanner", 
+      "width=500,height=600,top=100,left=100"
+      );
+    
+      if (!popup) {
+        alert("Veuillez autoriser les popups pour utiliser le scanner.");
+      }
+    };
+
   const input = document.querySelector("#date-picker");
   const getNewDate = () => input?.value ?? "";
+  
 
   // Fonction d'auto-complétion
   /*function AutoComplete({ items }) {
@@ -104,16 +117,18 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
       );
     };
 
+    //met à jour les suggestions quand inputValue change
     useEffect(() => {
       setSuggestions(getShownItems());
     }, [inputValue]);
 
+    //met à jour la valeur de inputValue en fonction de ce que l'utilisateur entre
     const handleInputChange = (e) => {
       setInputValue(e.target.value); // Saisie fluide sans toucher à l’état global
     };
 
     const handleSelectSuggestion = (name) => {
-      setInputValue(name); // Met à jour l'input visible
+      setInputValue(name); //met à jour l'input visible
       setItem((prev) => ({ ...prev, name })); // Met aussi à jour l'état global principal
       setSuggestions([]); // Efface les suggestions après sélection
     };
@@ -180,6 +195,9 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
         </div>
         <button type="submit" className="Inventory-input-button">
           Entrer
+        </button>
+        <button className="bouton-scan" onClick={handleCodeBarre}> {/* pour code barre */}
+          Scanner par code-barre
         </button>
       </form>
     </div>
