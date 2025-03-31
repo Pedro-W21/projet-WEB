@@ -7,15 +7,21 @@ import axios from 'axios';
 import InventoryTable from './components/InventoryTable';
 import AddItemForm from './components/AddItemForm';
 import ConnectForm from './components/ConnectForm';
-import { CookiesProvider, useCookies } from 'react-cookie'
+import { CookiesProvider, useCookies } from 'react-cookie';
 
 function App() {
   const [items, setItems] = React.useState([]);
   const [showAddForm, setShowAddForm] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [showPopup, setShowPopup] = React.useState(false);
+
+  /* Début vol de : https://clerk.com/blog/setting-and-using-cookies-in-react */
+  const [cookies, setCookie] = useCookies(['user'])
+  /* fin vol de */
   const [groupID, setGroupID] = React.useState("");
   const [groups, setGroups] = React.useState([]);
+
+  
 
   const fetchInventory = async (group_id) => {
     try {
@@ -40,6 +46,11 @@ function App() {
       setLoading(false);
     }
   };
+
+  if (cookies.user != undefined && cookies.user.group_id != "" && groupID == "") {
+    setGroupID(cookies.user.group_id);
+    fetchInventory(cookies.user.group_id);
+  }
 
   const fetchGroups = async () => {
     try {
@@ -105,6 +116,9 @@ function App() {
             await axios.post('http://localhost:3000/api/groups', [...groups, {group_id:chosen_group}]);
             setGroups([...groups, {group_id:chosen_group}])
             setGroupID(chosen_group);
+            const expirationDate = new Date()
+            expirationDate.setDate(expirationDate.getDate() + 7)
+            setCookie('user', {group_id:chosen_group}, { path: '/', expires:expirationDate})
             alert('Groupe sauvegardé !');
           
           }
@@ -124,6 +138,9 @@ function App() {
       alert("Group doesn't exist !")
     }
     else {
+      const expirationDate = new Date()
+      expirationDate.setDate(expirationDate.getDate() + 7)
+      setCookie('user', {group_id:chosen_group}, { path: '/', expires:expirationDate})
       setGroupID(chosen_group);
       alert("Connecté au groupe !");
       fetchInventory(chosen_group);
@@ -140,8 +157,7 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <CookiesProvider>
+      <div className="App">
         <div>
           <h1>INSApprovisionnement</h1>
         </div>
@@ -184,10 +200,7 @@ function App() {
         <footer className="BasDePage">
           <img src={image_logo_insa} alt="logo INSA" className="INSA-logo"/>
         </footer>
-      </CookiesProvider>
-      
-    </div>
-    
+      </div>
   );
 }
 
