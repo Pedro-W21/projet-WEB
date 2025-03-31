@@ -1,25 +1,36 @@
 import React from "react";
 
+const getItemCriticity = (item) => {
+  if (item.quantity == 0) return "expired_or_none"; //Rouge foncé (car il n'y en a plus)
+  if (item.bestBy != null) {
+    const now = new Date();
+    const bestBy = new Date(item.bestBy);
+    const diffTime = bestBy - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) return "expired_or_none"; // Rouge foncé (car périmé)
+    if (diffDays <= 1) return "critical"; // Rouge (car 1 jour ou moins)
+    if (diffDays <= 3) return "warning"; // Orange (car 3 jours ou moins)
+    
+  }
+  return "";
+}
+
+const genererListeCourses = (items) => {
+  return items
+  //on met dans la liste uniquement les items orange ou plus critiques
+    .filter(item => getItemCriticity(item) === "warning" || getItemCriticity(item) === "critical" || getItemCriticity(item) === "expired_or_none")
+    .map(item => ({
+      nom: item.name,
+      criticite: getItemCriticity(item)
+    }));
+};
+
+
 function InventoryTable({ items, setItems, loading, group }) {
 
   const [shown_items, setShowItems] = React.useState(items.slice());
   
-  const getItemCriticity = (item) => {
-    if (item.quantity == 0) return "expired_or_none"; //Rouge foncé (car il n'y en a plus)
-    if (item.bestBy != null) {
-      const now = new Date();
-      const bestBy = new Date(item.bestBy);
-      const diffTime = bestBy - now;
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-      if (diffDays < 0) return "expired_or_none"; // Rouge foncé (car périmé)
-      if (diffDays <= 1) return "critical"; // Rouge (car 1 jour ou moins)
-      if (diffDays <= 3) return "warning"; // Orange (car 3 jours ou moins)
-      
-    }
-    return "";
-  }
-
   const sortItems = (items_to_sort) => {
     const priority = {
       expired_or_none: 0,
@@ -61,6 +72,7 @@ function InventoryTable({ items, setItems, loading, group }) {
     }
     
   };
+  
 
   const createDateString = (date_str) => {
     if (date_str == null) {
@@ -135,4 +147,6 @@ function InventoryTable({ items, setItems, loading, group }) {
   );
 }
 
+
 export default InventoryTable;
+export { genererListeCourses };
