@@ -1,4 +1,5 @@
 import React from "react";
+import useMediaQuery from 'react-responsive';
 
 function InventoryTable({ items, setItems, loading, group }) {
 

@@ -157,6 +157,12 @@ width: 300px;
   max-height: 90%;
 }
 
+.form-column-vert {
+
+  color:#fff;
+  margin: 10px;
+}
+
 .choix-groupe {
   border-radius: 25px;
   padding: 20px;
@@ -184,8 +190,21 @@ width: 300px;
   max-height: 90%
 }
 
+.Tableau-et-boutons-vert {
+  margin:10px;
+  padding: 20px;
+  border-radius: 25px;
+  background: #fff;
+  display:table;
+  min-height: 30%;
+}
+
 .Partie-fonctionnelle {
   display: flex; 
+  height: 100%;
+}
+
+.Partie-fonctionnelle-vert {
   height: 100%;
 }
 

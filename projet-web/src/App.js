@@ -8,8 +8,12 @@ import InventoryTable from './components/InventoryTable';
 import AddItemForm from './components/AddItemForm';
 import ConnectForm from './components/ConnectForm';
 import { CookiesProvider, useCookies } from 'react-cookie';
+import {useMediaQuery, MediaQuery} from 'react-responsive';
+
 
 function App() {
+
+  const isLandscape = useMediaQuery({ query: '(orientation: landscape)' })
   const [items, setItems] = React.useState([]);
   const [showAddForm, setShowAddForm] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -161,12 +165,12 @@ function App() {
         <div>
           <h1>INSApprovisionnement</h1>
         </div>
-        <div className = "Partie-fonctionnelle">
-          <div className="form-column">
+        <div className = {isLandscape ? "Partie-fonctionnelle" : "Partie-fonctionnelle-vert"}>
+          <div className={isLandscape ? "form-column" : "form-column-vert"}>
             <ConnectForm onSubmit={handleGroupConnect} onCancel={handleGroupConnect} groupID={groupID} setGroupID={setGroupID} groups={groups} onChange={fetchGroups}/>
             <AddItemForm items={items} onSubmit={handleAddItem} onCancel={handleAddItem}/>
           </div>
-          <div className="Tableau-et-boutons">
+          <div className={isLandscape ? "Tableau-et-boutons" : "Tableau-et-boutons-vert"}>
             <InventoryTable items={items} setItems={setItems} loading={loading} group={groupID}/>
             <div className = "Boutons-en-bas">
               <button className="Bouton-tableau" onClick={handleSave}>
