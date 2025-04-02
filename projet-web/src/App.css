@@ -75,6 +75,8 @@
   color: #1f3a8a;
   min-width: 50px;
   max-width: 50%;
+  outline: none;
+  border-color: #172b66;
 }
 
 #search-bar {
