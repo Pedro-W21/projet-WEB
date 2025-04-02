@@ -51,5 +51,112 @@
             "olive",
             "anchois"
         ]
+    },
+    "Omelette nature":{
+        "Temps de préparation": "5 min",
+        "Temps de cuisson": "5 min",
+        "ingrédients": [
+            "oeufs",
+            "sel",
+            "poivre",
+            "beurre"
+        ]
+    },
+    "Toast à l'avocat":{
+        "Temps de préparation": "5 min",
+        "Temps de cuisson": "0 min",
+        "ingrédients": [
+            "pain",
+            "avocat",
+            "sel",
+            "poivre",
+            "citron"
+        ]
+    },
+    "Soupe de légumes":{
+        "Temps de préparation": "15 min",
+        "Temps de cuisson": "25 min",
+        "ingrédients": [
+            "carotte",
+            "pomme de terre",
+            "poireau",
+            "oignon",
+            "bouillon"
+        ]
+    },
+    "Tartine tomate-mozzarella":{
+        "Temps de préparation": "10 min",
+        "Temps de cuisson": "5 min",
+        "ingrédients": [
+            "pain",
+            "tomate",
+            "mozzarella",
+            "basilic",
+            "huile d'olive"
+        ]
+    },
+    "Gratin de courgettes":{
+        "Temps de préparation": "15 min",
+        "Temps de cuisson": "35 min",
+        "ingrédients": [
+            "courgette",
+            "fromage",
+            "crème fraîche",
+            "oeuf"
+        ]
+    },
+    "Smoothie banane-fraise":{
+        "Temps de préparation": "5 min",
+        "Temps de cuisson": "0 min",
+        "ingrédients": [
+            "banane",
+            "fraise",
+            "lait",
+            "miel"
+        ]
+    },
+    "Pain perdu":{
+        "Temps de préparation": "10 min",
+        "Temps de cuisson": "10 min",
+        "ingrédients": [
+            "pain rassis",
+            "lait",
+            "oeuf",
+            "sucre",
+            "beurre"
+        ]
+    },
+    "Salade de fruits":{
+        "Temps de préparation": "10 min",
+        "Temps de cuisson": "0 min",
+        "ingrédients": [
+            "pomme",
+            "banane",
+            "orange",
+            "fraise",
+            "jus de citron"
+        ]
+    },
+    "Wrap poulet crudités":{
+        "Temps de préparation": "10 min",
+        "Temps de cuisson": "5 min",
+        "ingrédients": [
+            "tortilla",
+            "poulet",
+            "salade",
+            "tomate",
+            "sauce yaourt"
+        ]
+    },
+    "Tartiflette express":{
+        "Temps de préparation": "15 min",
+        "Temps de cuisson": "30 min",
+        "ingrédients": [
+            "pomme de terre",
+            "reblochon",
+            "lardons",
+            "oignon",
+            "crème fraîche"
+        ]
     }
 }
