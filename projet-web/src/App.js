@@ -18,6 +18,7 @@ function App() {
   const [showAddForm, setShowAddForm] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [showPopup, setShowPopup] = React.useState(false);
+  const [recettes, setRecettes] = React.useState([]);
 
   /* Début vol de : https://clerk.com/blog/setting-and-using-cookies-in-react */
   const [cookies, setCookie] = useCookies(['user'])
@@ -180,9 +181,34 @@ function App() {
   };  
   
 
-  const handleRecettesClick = () => {
-    setShowPopup(true);
-  };
+  const handleRecettesClick = async () => {
+    try {
+        if (!groupID) {
+            alert("Veuillez sélectionner un groupe !");
+            return;
+        }
+
+        console.log(`Fetching recipes for group ID: ${groupID}`);
+
+        const response = await axios.get(`http://localhost:3000/api/inventory/recipes/${groupID}`);
+
+        console.log('Response:', response.data);
+
+        if (response.data.recettes) {
+            setRecettes(response.data.recettes);
+        } else if (response.data.message) {
+            setRecettes([]);
+            alert(response.data.message);
+        } else {
+            setRecettes([]);
+        }
+
+        setShowPopup(true);
+    } catch (error) {
+        console.error('Error fetching recipes:', error.response?.data || error);
+        alert('Erreur lors de la récupération des recettes.');
+    }
+};
 
   const closePopup = () => {
     setShowPopup(false);
@@ -226,20 +252,24 @@ function App() {
         </div>
         {showPopup && (
         <>
-        <div className="popup-overlay" onClick={closePopup}></div>
+          <div className="popup-overlay" onClick={closePopup}></div>
           <div className="popup">
             <div className="popup-content">
               <h2>Recettes Disponibles</h2>
+              {recettes.length > 0 ? (
                 <ul>
-                  <li>Recette 1: Salade de fruits</li>
-                  <li>Recette 2: Soupe aux légumes</li>
-                  <li>Recette 3: Pâtes à la tomate</li>
+                  {recettes.map((recette, index) => (
+                    <li key={index}>{recette}</li>
+                  ))}
                 </ul>
-              <button onClick={closePopup}>Fermer</button>   
+              ) : (
+                <p>Aucune recette disponible avec les ingrédients actuels.</p>
+              )}
+              <button onClick={closePopup}>Fermer</button>
             </div>
           </div>
         </>
-        )}
+      )}
         {showListeCoursesPopup && (
         <>
         <div className="popup-overlay" onClick={closeListeCoursesPopup}></div>

@@ -84,34 +84,48 @@ app.post('/api/inventory', async (req, res) => {
     }
 });
 
-app.post('/api/inventory/recipes', async (req, res) => {
+app.get('/api/inventory/recipes/:group_id', async (req, res) => {
     try {
-        const items = await InventoryItem.find({group_id:req.body.group_id});
+        const groupId = req.params.group_id;
+        
+        if (!groupId) {
+            return res.status(400).json({ error: 'Group ID is required' });
+        }
+
+        console.log(`Fetching inventory for group ID: ${groupId}`);
+
+        // Fetch only the inventory items for the specified group
+        const items = await InventoryItem.find({ group_id: groupId });
+
+        console.log(`Items found for group ${groupId}:`, items);
+
+        if (!items.length) {
+            return res.json({ message: "Aucun ingrédient disponible dans ce groupe." });
+        }
+
         let recettesDisponibles = [];
-        const envoi = {}; 
 
         for (const recette in recettes) {
             const ingrédients = recettes[recette]["ingrédients"];
-
-            // Vérifie si TOUS les ingrédients de la recette sont dans les items
-            let recettePossible = ingrédients.every(ingrédient =>
-                items.some(item => item.name === ingrédient)
+            let recettePossible = ingrédients.every(ingr => 
+                items.some(item => item.name.toLowerCase() === ingr.toLowerCase())
             );
 
             if (recettePossible) {
                 recettesDisponibles.push(recette);
             }
         }
-        if (recettesDisponibles.length == 0) {
-            envoi.message = "Il n'y a pas de recette avec les ingrédients disponibles";
-        }else {
-            envoi.message = recettesDisponibles;
+
+        console.log(`Recettes disponibles pour ${groupId}:`, recettesDisponibles);
+
+        if (recettesDisponibles.length === 0) {
+            return res.json({ message: "Aucune recette trouvée avec les ingrédients disponibles." });
+        } else {
+            return res.json({ recettes: recettesDisponibles });
         }
-        console.log(envoi.message);
-        res.json(envoi.message);
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: 'Error fetching recipe' });
+        console.error('Error fetching recipes:', err);
+        res.status(500).json({ error: 'Erreur serveur lors de la récupération des recettes.' });
     }
 });
 
