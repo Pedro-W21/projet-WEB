@@ -311,7 +311,6 @@ width: 300px;
 
 .autocomplete-suggestions {
   position: absolute;
-  left: 0;
   width: 100%;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -328,7 +327,7 @@ width: 300px;
 }
 
 .autocomplete-suggestion {
-  padding: 10px;
+  padding: 3px;
   cursor: pointer;
   transition: background-color 0.3s;
   color: #a6a6a6;
@@ -336,9 +335,8 @@ width: 300px;
 }
 
 .autocomplete-suggestion:hover {
-  
-  background: #213d91;
-  color: #a6a6a6;
+  background: #4866c0;
+  color: #b6b5b5;
 }
 
 /*fin volé de*/
