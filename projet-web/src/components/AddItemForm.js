@@ -41,7 +41,25 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
 
   const input = document.querySelector("#date-picker");
   const getNewDate = () => input?.value ?? "";
-  
+
+  //pour récupérer les données de la page barcode
+  useEffect(() => {
+    function handleMessage(event) {
+        if (event.data && event.data.name) {
+            setInputValue(event.data.name);
+            setItem((prev) => ({
+                ...prev,
+                name: event.data.name // Remplit le champ automatiquement
+            }));
+        }
+    }
+
+    window.addEventListener("message", handleMessage);
+    
+    return () => {
+        window.removeEventListener("message", handleMessage);
+    };
+  }, []);
 
   // Fonction d'auto-complétion
   function AutoComplete({ items }) {

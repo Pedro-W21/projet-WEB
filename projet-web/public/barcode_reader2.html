@@ -79,7 +79,7 @@
             initCropper(imageUrl);
         });
 
-        // 📁 Upload d'une image depuis le stockage
+        // Upload d'une image depuis le stockage
         document.getElementById('uploadImage').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -122,12 +122,12 @@
             img.onload = function () {
                 codeReader.decodeFromImage(img)
                     .then(result => {
-                        document.getElementById("barcodeResult").innerText = "Code-barres détecté : " + result.text;
+                        document.getElementById("barcodeResult").innerText = "Code-barre détecté : " + result.text;
                         fetchProductInfo(result.text);
                     })
                     .catch(err => {
                         console.error("Erreur de détection :", err);
-                        document.getElementById("barcodeResult").innerText = "Aucun code-barres détecté.";
+                        document.getElementById("barcodeResult").innerText = "Aucun code-barre détecté.";
                     });
             };
         }
@@ -138,6 +138,13 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 1) {
+                        const productData = {
+                            name: data.product.product_name || "Inconnu",
+                            brand: data.product.brands || "Inconnu",
+                            category: data.product.categories || "Inconnu",
+                            image: data.product.image_url || null
+                        };
+
                         document.getElementById("productName").innerText = data.product.product_name || "Inconnu";
                         document.getElementById("productBrand").innerText = data.product.brands || "Inconnu";
                         document.getElementById("productCategory").innerText = data.product.categories || "Inconnu";
@@ -147,6 +154,7 @@
                         } else {
                             document.getElementById("productImage").style.display = "none";
                         }
+                        sendDataToParent(productData.name); //à modifier
                     } else {
                         document.getElementById("productName").innerText = "Produit non trouvé";
                         document.getElementById("productBrand").innerText = "N/A";
@@ -155,6 +163,15 @@
                     }
                 })
                 .catch(error => console.error("Erreur API :", error));
+        }
+
+        function sendDataToParent(productName) {
+            if (window.opener) {
+                window.opener.postMessage({ name: productName }, "*"); // Envoi des données
+                //window.close(); // Ferme la popup après envoi
+            } else {
+                alert("Impossible d'envoyer les données, la fenêtre principale est introuvable.");
+            }
         }
     </script>
 
