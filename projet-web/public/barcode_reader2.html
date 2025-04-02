@@ -21,17 +21,17 @@
     <h2>Scanner un Code-Barres</h2>
 
     <!-- Choix entre prendre une photo ou uploader une image -->
-    <button id="takePhoto">📷 Prendre une photo</button>
+    <button id="takePhoto"> Prendre une photo</button>
     <input type="file" id="uploadImage" accept="image/*">
     
     <!-- Zone de capture vidéo -->
     <video id="camera" autoplay style="display: none;"></video>
-    <button id="capture" style="display: none;">📸 Capturer</button>
+    <button id="capture" style="display: none;"> Capturer</button>
 
     <!-- Zone de rognage -->
     <div id="cropper-container">
         <img id="imageToCrop">
-        <button id="crop">✅ Rogner et Scanner</button>
+        <button id="crop"> Rogner et Scanner</button>
     </div>
 
     <!-- Affichage du résultat -->
@@ -51,7 +51,7 @@
         const codeReader = new ZXing.BrowserBarcodeReader();
         let cropper;
 
-        // 📷 Prendre une photo avec la caméra
+        // Prendre une photo avec la caméra
         document.getElementById('takePhoto').addEventListener('click', function() {
             const video = document.getElementById('camera');
             const captureButton = document.getElementById('capture');
@@ -65,7 +65,7 @@
                 .catch(error => console.error("Erreur d'accès à la caméra :", error));
         });
 
-        // 📸 Capturer une image depuis la caméra
+        // Capturer une image depuis la caméra
         document.getElementById('capture').addEventListener('click', function() {
             const video = document.getElementById('camera');
             const canvas = document.createElement('canvas');
@@ -79,7 +79,7 @@
             initCropper(imageUrl);
         });
 
-        // 📁 Upload d'une image depuis le stockage
+        // Upload d'une image depuis le stockage
         document.getElementById('uploadImage').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -91,7 +91,7 @@
             }
         });
 
-        // 🔲 Initialisation du CropperJS
+        // Initialisation du CropperJS
         function initCropper(imageSrc) {
             const imageElement = document.getElementById('imageToCrop');
             imageElement.src = imageSrc;
@@ -104,7 +104,7 @@
             });
         }
 
-        // ✅ Rogner et scanner l'image
+        // Rogner et scanner l'image
         document.getElementById('crop').addEventListener('click', function() {
             const croppedCanvas = cropper.getCroppedCanvas();
             const croppedImageUrl = croppedCanvas.toDataURL('image/png');
@@ -115,29 +115,36 @@
             scanBarcode(croppedImageUrl);
         });
 
-        // 🔍 Scanner un code-barres
+        // Scanner un code-barres
         function scanBarcode(imageSrc) {
             const img = new Image();
             img.src = imageSrc;
             img.onload = function () {
                 codeReader.decodeFromImage(img)
                     .then(result => {
-                        document.getElementById("barcodeResult").innerText = "Code-barres détecté : " + result.text;
+                        document.getElementById("barcodeResult").innerText = "Code-barre détecté : " + result.text;
                         fetchProductInfo(result.text);
                     })
                     .catch(err => {
                         console.error("Erreur de détection :", err);
-                        document.getElementById("barcodeResult").innerText = "Aucun code-barres détecté.";
+                        document.getElementById("barcodeResult").innerText = "Aucun code-barre détecté.";
                     });
             };
         }
 
-        // 🌐 Obtenir les informations du produit
+        // Obtenir les informations du produit
         function fetchProductInfo(barcode) {
             fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 1) {
+                        const productData = {
+                            name: data.product.product_name || "Inconnu",
+                            brand: data.product.brands || "Inconnu",
+                            category: data.product.categories || "Inconnu",
+                            image: data.product.image_url || null
+                        };
+
                         document.getElementById("productName").innerText = data.product.product_name || "Inconnu";
                         document.getElementById("productBrand").innerText = data.product.brands || "Inconnu";
                         document.getElementById("productCategory").innerText = data.product.categories || "Inconnu";
@@ -147,6 +154,7 @@
                         } else {
                             document.getElementById("productImage").style.display = "none";
                         }
+                        sendDataToParent(productData.name); //à modifier
                     } else {
                         document.getElementById("productName").innerText = "Produit non trouvé";
                         document.getElementById("productBrand").innerText = "N/A";
@@ -155,6 +163,15 @@
                     }
                 })
                 .catch(error => console.error("Erreur API :", error));
+        }
+
+        function sendDataToParent(productName) {
+            if (window.opener) {
+                window.opener.postMessage({ name: productName }, "*"); // Envoi des données
+                //window.close(); // Ferme la popup après envoi
+            } else {
+                alert("Impossible d'envoyer les données, la fenêtre principale est introuvable.");
+            }
         }
     </script>
 

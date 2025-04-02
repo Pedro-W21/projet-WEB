@@ -288,6 +288,71 @@ width: 300px;
   z-index: 999;
 }
 
+
+
+/* début volé de https://www.geeksforgeeks.org/how-to-add-auto-complete-search-box-in-reactjs/ */
+.autocomplete-container {
+  position: relative;
+  width: 90%;
+}
+
+.autocomplete-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+
+  background: #172b66;
+  color: #a6a6a6;
+  border-color: #172b66;
+}
+
+.autocomplete-suggestions {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 1000;
+  background: #172b66;
+  color: #a6a6a6;
+  border-color: #172b66;
+}
+
+.autocomplete-suggestion {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #a6a6a6;
+  background: #172b66;
+}
+
+.autocomplete-suggestion:hover {
+  
+  background: #213d91;
+  color: #a6a6a6;
+}
+
+/*fin volé de*/
+.bouton-scan {
+  margin-top: 3%;
+  border-radius: 50px;
+  background: #ffbde9;
+  color: #ffffff;
+  min-width: 33%;
+}
+
+.bouton-scan:hover {
+  background-color: #bdc7d4;
+}
 .popup-buttons {
   display: flex;
   justify-content: flex-end; /* Aligne les boutons à droite */
