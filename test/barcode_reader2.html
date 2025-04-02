@@ -24,7 +24,7 @@
     <h2>Scanner un Code-Barres</h2>
 
     <!-- Scanner avec la caméra -->
-    <button id="startScan">📷 Scanner avec la caméra</button>
+    <button id="startScan">Scanner avec la caméra</button>
 
     <!-- Importer une image -->
     <input type="file" id="uploadImage" accept="image/*">
@@ -62,8 +62,8 @@
                     console.log("Code détecté :", barcode);
                     document.getElementById("barcodeResult").innerText = "Code : " + barcode;
 
-                    stopCamera(); // 🛑 Stopper la caméra
-                    fetchProductInfo(barcode); // 🌐 Récupérer les infos produit
+                    stopCamera(); // Stopper la caméra
+                    fetchProductInfo(barcode); // Récupérer les infos produit
                 }
             });
         });
