@@ -211,12 +211,22 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
             }
           />
         </div>
+        <div>
         <button type="submit" className="Inventory-input-button">
           Entrer
         </button>
+        </div>
+        
+        <div className="ou">
+          <span>
+            ou
+          </span>
+        </div>
+        <div>
         <button className="bouton-scan" onClick={handleCodeBarre}> {/* pour code barre */}
           Scanner par code-barre
         </button>
+        </div>
       </form>
     </div>
   );
