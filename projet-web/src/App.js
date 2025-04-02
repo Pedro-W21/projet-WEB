@@ -169,14 +169,11 @@ function App() {
     const encodedMessage = encodeURIComponent(message);
   
     // Demande de choix entre WhatsApp et Email
-    const choix = window.confirm("Voulez-vous envoyer la liste via WhatsApp ? (Annuler = Email)");
+    const choix = window.confirm("Voulez-vous envoyer la liste via WhatsApp ?");
   
     if (choix) {
-      // WhatsApp Web
+      // ouvre WhatsApp Web, d'où on pourra choisir le destinataire
       window.open(`https://web.whatsapp.com/send?text=${encodedMessage}`, "_blank");
-    } else {
-      // Email
-      window.open(`mailto:?subject=Liste de courses&body=${encodedMessage}`);
     }
   };  
   
@@ -278,8 +275,7 @@ function App() {
               <h2>Liste de Courses</h2>
               <ul>
                 {genererListeCourses(items).map((item, index) => (
-                  <li key={index}>{item.nom} ({formaterMessageCriticite(item)})</li>
-                ))}
+                  <li key={index}>{item.nom} ({item.criticite})</li>))}
               </ul>
               <div className="popup-buttons">
                 <button onClick={envoyerListeCourses}>Envoyer par WhatsApp ou Email</button>
@@ -289,6 +285,7 @@ function App() {
           </div>
         </>
         )}
+
 
         <footer className="BasDePage">
           <img src={image_logo_insa} alt="logo INSA" className="INSA-logo"/>

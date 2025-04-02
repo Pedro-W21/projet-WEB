@@ -31,7 +31,7 @@ const formaterMessageCriticite = (item) => {
   const criticite = getItemCriticity(item);
   //remplace la criticité par un joli message correspondant
   if (criticite === "expired_or_none") {
-    return "il n'y en a plus";
+    return "il n'y en a plus de consommable";
   } else if (criticite === "critical") {
     return "périme aujourd'hui";
   } else if (criticite === "warning") {
