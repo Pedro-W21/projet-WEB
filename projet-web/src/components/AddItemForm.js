@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 /* début volé de https://www.geeksforgeeks.org/how-to-add-auto-complete-search-box-in-reactjs/ */
 import Autosuggest from 'react-autosuggest';
 
+//partie auto-complétion
 const AutocompleteSearch = ({ base_suggestions, value, onChange }) => {
   const [suggestions, setSuggestions] = useState(base_suggestions);
 
@@ -74,6 +75,7 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
     }));
   };
 
+  //partie code barre
   const handleCodeBarre = () => {
     const popup = window.open(
       "/barcode_reader2.html",
@@ -86,6 +88,7 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
     }
   };
 
+  //remplit automatiquement le input
   useEffect(() => {
     function handleMessage(event) {
       if (event.data && event.data.name) {
