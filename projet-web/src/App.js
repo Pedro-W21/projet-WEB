@@ -4,7 +4,7 @@ import './App.css';
 
 import React from 'react';
 import axios from 'axios';
-import InventoryTable, { genererListeCourses } from './components/InventoryTable';
+import InventoryTable, { genererListeCourses, formaterMessageCriticite } from './components/InventoryTable';
 import AddItemForm from './components/AddItemForm';
 import ConnectForm from './components/ConnectForm';
 import { CookiesProvider, useCookies } from 'react-cookie';
@@ -154,6 +154,33 @@ function App() {
     
   }
 
+  const envoyerListeCourses = () => {
+    const listeCourses = genererListeCourses(items);
+  
+    if (!listeCourses.length) {
+      alert("Votre liste de courses est vide !");
+      return;
+    }
+  
+    // Formatage du message
+    const message = `Liste de Courses :\n` + 
+    listeCourses.map(item => `- ${item.nom} (${item.criticite})`).join("\n");
+  
+    const encodedMessage = encodeURIComponent(message);
+  
+    // Demande de choix entre WhatsApp et Email
+    const choix = window.confirm("Voulez-vous envoyer la liste via WhatsApp ? (Annuler = Email)");
+  
+    if (choix) {
+      // WhatsApp Web
+      window.open(`https://web.whatsapp.com/send?text=${encodedMessage}`, "_blank");
+    } else {
+      // Email
+      window.open(`mailto:?subject=Liste de courses&body=${encodedMessage}`);
+    }
+  };  
+  
+
   const handleRecettesClick = async () => {
     try {
         if (!groupID) {
@@ -251,10 +278,13 @@ function App() {
               <h2>Liste de Courses</h2>
               <ul>
                 {genererListeCourses(items).map((item, index) => (
-                  <li key={index}>{item.nom} - Criticité: {item.criticite}</li>
+                  <li key={index}>{item.nom} ({formaterMessageCriticite(item)})</li>
                 ))}
               </ul>
-              <button onClick={closeListeCoursesPopup}>Fermer</button>
+              <div className="popup-buttons">
+                <button onClick={envoyerListeCourses}>Envoyer par WhatsApp ou Email</button>
+                <button onClick={closeListeCoursesPopup}>Fermer</button>
+              </div>
             </div>
           </div>
         </>
