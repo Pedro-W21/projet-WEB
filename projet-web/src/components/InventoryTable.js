@@ -23,10 +23,23 @@ const genererListeCourses = (items) => {
     .filter(item => getItemCriticity(item) === "warning" || getItemCriticity(item) === "critical" || getItemCriticity(item) === "expired_or_none")
     .map(item => ({
       nom: item.name,
-      criticite: getItemCriticity(item)
+      criticite: formaterMessageCriticite(item)
     }));
 };
 
+const formaterMessageCriticite = (item) => {
+  const criticite = getItemCriticity(item);
+  //remplace la criticité par un joli message correspondant
+  if (criticite === "expired_or_none") {
+    return "il n'y en a plus";
+  } else if (criticite === "critical") {
+    return "périme aujourd'hui";
+  } else if (criticite === "warning") {
+    return `périme dans moins de 3 jours`;
+  } else {
+    return "";
+  }
+};
 
 function InventoryTable({ items, setItems, loading, group }) {
 
@@ -150,4 +163,4 @@ function InventoryTable({ items, setItems, loading, group }) {
 
 
 export default InventoryTable;
-export { genererListeCourses };
+export { genererListeCourses, formaterMessageCriticite };
