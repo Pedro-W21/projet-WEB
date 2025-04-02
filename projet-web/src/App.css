@@ -402,6 +402,7 @@ width: 300px;
 }
 .bouton-scan:hover {
   background-color: #bdc7d4;
+  transition: all 0.3s ease 0s;
 }
 
 .ou {
