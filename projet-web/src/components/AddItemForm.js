@@ -64,7 +64,7 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
     });
   };
 
-  const suggestions = items.map((item) => item.name);
+  const suggestions = Array.from(new Set(items.map((item) => item.name)));
 
   const handleChange = (e) => {
     const { name, value } = e.target;
