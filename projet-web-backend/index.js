@@ -84,35 +84,33 @@ app.post('/api/inventory', async (req, res) => {
     }
 });
 
-app.get('/api/inventory/recipes', async (req, res) => {
+app.post('/api/inventory/recipes', async (req, res) => {
     try {
-        const items = await InventoryItem.find();
+        const items = await InventoryItem.find({group_id:req.body.group_id});
         let recettesDisponibles = [];
         const envoi = {}; 
 
         for (const recette in recettes) {
             const ingrédients = recettes[recette]["ingrédients"];
-            let recettePossible = true;
 
-            for (let i = 0; i < ingrédients.length; i++) {
-                for (let j = 0; j < items.length; j++) {
-                    if (!items.some(item => item.name === ingrédients[i])) { 
-                        recettePossible = false;
-                        break;
-                    }
-                }
-            }
-            if (recettePossible == true) {
+            // Vérifie si TOUS les ingrédients de la recette sont dans les items
+            let recettePossible = ingrédients.every(ingrédient =>
+                items.some(item => item.name === ingrédient)
+            );
+
+            if (recettePossible) {
                 recettesDisponibles.push(recette);
             }
+        }
         if (recettesDisponibles.length == 0) {
             envoi.message = "Il n'y a pas de recette avec les ingrédients disponibles";
         }else {
             envoi.message = recettesDisponibles;
         }
-        }
+        console.log(envoi.message);
         res.json(envoi.message);
     } catch (err) {
+        console.log(err);
         res.status(500).json({ error: 'Error fetching recipe' });
     }
 });
