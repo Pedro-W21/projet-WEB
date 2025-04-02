@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 /* début volé de https://www.geeksforgeeks.org/how-to-add-auto-complete-search-box-in-reactjs/ */
 import Autosuggest from 'react-autosuggest';
 
-const AutocompleteSearch = ({base_suggestions, setNewValue}) => {
-  const [value, setValue] = useState('');
+const AutocompleteSearch = ({ base_suggestions, value, onChange }) => {
   const [suggestions, setSuggestions] = useState(base_suggestions);
 
   const getSuggestions = (inputValue) => {
@@ -19,19 +18,10 @@ const AutocompleteSearch = ({base_suggestions, setNewValue}) => {
     setSuggestions([]);
   };
 
-  const onChange = (event, { newValue }) => {
-    setValue(newValue);
-    setNewValue(newValue);
-  };
-
-  const getSuggestionValue = (suggestion) => suggestion;
-
-  const renderSuggestion = (suggestion) => <div>{suggestion}</div>;
-
   const inputProps = {
     placeholder: 'Type to search...',
     value,
-    onChange
+    onChange: (event, { newValue }) => onChange(newValue), // Appel direct à onChange
   };
 
   // Custom theme for styling
@@ -47,16 +37,14 @@ const AutocompleteSearch = ({base_suggestions, setNewValue}) => {
       suggestions={suggestions}
       onSuggestionsFetchRequested={onSuggestionsFetchRequested}
       onSuggestionsClearRequested={onSuggestionsClearRequested}
-      getSuggestionValue={getSuggestionValue}
-      renderSuggestion={renderSuggestion}
+      getSuggestionValue={(suggestion) => suggestion}
+      renderSuggestion={(suggestion) => <div>{suggestion}</div>}
       inputProps={inputProps}
       theme={theme} // Apply custom theme for styling
       id="auto-search"
     />
   );
 };
-
-/* Fin volé de */
 
 function AddItemForm({ items, onSubmit, onCancel, groupID }) {
   const [item, setItem] = useState({
@@ -67,15 +55,12 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
     _id: Date.now(),
   });
 
-  const [inputValue, setInputValue] = useState(item.name); // Pour l'auto-complétion
-
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
-      ...item, // Récupère tout l'état item
-      name: inputValue, // Utilise inputValue comme valeur finale de item.name
-      group_id:groupID,
-      _id:Date.now()
+      ...item,
+      group_id: groupID,
+      _id: Date.now(),
     });
   };
 
@@ -90,94 +75,33 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
   };
 
   const handleCodeBarre = () => {
-      const popup = window.open(
-      "/barcode_reader2.html", 
-      "PopupScanner", 
+    const popup = window.open(
+      "/barcode_reader2.html",
+      "PopupScanner",
       "width=500,height=600,top=100,left=100"
-      );
-    
-      if (!popup) {
-        alert("Veuillez autoriser les popups pour utiliser le scanner.");
-      }
-    };
+    );
 
-  const input = document.querySelector("#date-picker");
-  const getNewDate = () => input?.value ?? "";
+    if (!popup) {
+      alert("Veuillez autoriser les popups pour utiliser le scanner.");
+    }
+  };
 
-  //pour récupérer les données de la page barcode
   useEffect(() => {
     function handleMessage(event) {
-        if (event.data && event.data.name) {
-            setInputValue(event.data.name);
-            setItem((prev) => ({
-                ...prev,
-                name: event.data.name // Remplit le champ automatiquement
-            }));
-        }
+      if (event.data && event.data.name) {
+        setItem((prev) => ({
+          ...prev,
+          name: event.data.name, // Mise à jour sans conflit avec l'auto-complete
+        }));
+      }
     }
 
     window.addEventListener("message", handleMessage);
-    
+
     return () => {
-        window.removeEventListener("message", handleMessage);
+      window.removeEventListener("message", handleMessage);
     };
   }, []);
-
-  // Fonction d'auto-complétion
-  /*function AutoComplete({ items }) {
-    const [suggestions, setSuggestions] = useState([]);
-
-    // Fonction pour filtrer les suggestions
-    const getShownItems = () => {
-      const value = inputValue ?? "";
-      return items.filter((i) =>
-        i.name.toLowerCase().includes(value.toLowerCase())
-      );
-    };
-
-    //met à jour les suggestions quand inputValue change
-    useEffect(() => {
-      setSuggestions(getShownItems());
-    }, [inputValue]);
-
-    //met à jour la valeur de inputValue en fonction de ce que l'utilisateur entre
-    const handleInputChange = (e) => {
-      setInputValue(e.target.value); // Saisie fluide sans toucher à l’état global
-    };
-
-    const handleSelectSuggestion = (name) => {
-      setInputValue(name); //met à jour l'input visible
-      setItem((prev) => ({ ...prev, name })); // Met aussi à jour l'état global principal
-      setSuggestions([]); // Efface les suggestions après sélection
-    };
-
-    return (
-      <div className="autocompletion">
-        <input
-          className="Inventory-input"
-          type="text"
-          name="name"
-          value={inputValue} // inputValue permet la saisie fluide
-          onChange={handleInputChange}
-          placeholder="Tapez pour rechercher..."
-          required
-        />
-
-        {inputValue && suggestions.length > 0 && (
-          <ul className="suggestion-list">
-            {suggestions.map((suggestion, index) => (
-              <li
-                key={index}
-                onClick={() => handleSelectSuggestion(suggestion.name)}
-              >
-                {suggestion.name}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    );
-  }*/
 
   return (
     <div className="Ajoute-produit">
@@ -185,7 +109,11 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Nom:</label>
-          <AutocompleteSearch base_suggestions={suggestions} setNewValue={setInputValue}/>
+          <AutocompleteSearch
+            base_suggestions={suggestions}
+            value={item.name} // Utilise item.name comme source unique
+            onChange={(newValue) => setItem((prev) => ({ ...prev, name: newValue }))}
+          />
         </div>
         <div>
           <label>Quantité:</label>
@@ -205,21 +133,21 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
             className="Inventory-input"
             type="date"
             id="date-picker"
-            selected={item.bestBy}
             onChange={(e) =>
-              setItem((prev) => ({ ...prev, bestBy: getNewDate() }))
+              setItem((prev) => ({ ...prev, bestBy: e.target.value }))
             }
           />
         </div>
         <button type="submit" className="Inventory-input-button">
           Entrer
         </button>
-        <button className="bouton-scan" onClick={handleCodeBarre}> {/* pour code barre */}
+        <button className="bouton-scan" onClick={handleCodeBarre}>
           Scanner par code-barre
         </button>
       </form>
     </div>
   );
 }
+
 
 export default AddItemForm;
