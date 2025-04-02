@@ -68,7 +68,7 @@ app.post('/api/groups', async (req, res) => {
 app.get('/cors', (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
     res.send({ "msg": "This has CORS enabled 🎈" })
-})
+});
 
 app.post('/api/inventory', async (req, res) => {
     try {
