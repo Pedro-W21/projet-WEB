@@ -96,6 +96,14 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
           ...prev,
           name: event.data.name, // Mise à jour sans conflit avec l'auto-complete
         }));
+        // à enlever si on veut pas que ça rajoute automatiquement
+        /*
+        onSubmit({
+          ...item,
+          name: event.data.name,
+          group_id: groupID,
+          _id: Date.now(),
+        });*/
       }
     }
 
@@ -109,7 +117,7 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
   return (
     <div className="Ajoute-produit">
       <h2>Ajouter un produit</h2>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div>
           <label>Nom:</label>
           <AutocompleteSearch
@@ -142,7 +150,7 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
           />
         </div>
         <div>
-        <button type="submit" className="Inventory-input-button">
+        <button type="submit" className="Inventory-input-button" onClick={handleSubmit}>
           Entrer
         </button>
         </div>
