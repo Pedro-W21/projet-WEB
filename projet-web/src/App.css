@@ -303,7 +303,6 @@ width: 300px;
   border-radius: 25px;
   font-size: 16px;
   outline: none;
-
   background: #172b66;
   color: #a6a6a6;
   border-color: #172b66;
@@ -312,18 +311,18 @@ width: 300px;
 .autocomplete-suggestions {
   position: absolute;
   width: 100%;
+  left: 5%;
   background-color: #fff;
   border: 1px solid #ccc;
   border-top: none;
-  border-radius: 0 0 5px 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  list-style: none;
+  border-radius: 5px 5px 5px 5px;
   padding: 0;
   margin: 0;
   z-index: 1000;
-  background: #172b66;
+  background: #192f71;
   color: #a6a6a6;
   border-color: #172b66;
+  list-style: none;
 }
 
 .autocomplete-suggestion {
@@ -331,11 +330,14 @@ width: 300px;
   cursor: pointer;
   transition: background-color 0.3s;
   color: #a6a6a6;
-  background: #172b66;
+  background: #192f71;
+  list-style: none; 
+  margin:0;
+  transform: translate(-10%); 
 }
 
 .autocomplete-suggestion:hover {
-  background: #4866c0;
+  background: #374e95;
   color: #b6b5b5;
 }
 
