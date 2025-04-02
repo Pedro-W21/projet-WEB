@@ -35,7 +35,7 @@
     <!-- Zone de rognage -->
     <div id="cropper-container">
         <img id="imageToCrop">
-        <button id="crop">✅ Rogner et Scanner</button>
+        <button id="crop">Rogner et Scanner</button>
     </div>
 
     <h3>Informations sur le produit :</h3>
@@ -51,7 +51,7 @@
         let videoStream = null;
         let cropper = null;
 
-        // 🎬 Scanner avec la caméra
+        // Scanner avec la caméra
         document.getElementById('startScan').addEventListener('click', function() {
             const video = document.getElementById('camera');
             video.style.display = "block";
@@ -59,8 +59,8 @@
             codeReader.decodeFromVideoDevice(null, video, (result, err) => {
                 if (result) {
                     const barcode = result.text;
-                    console.log("✅ Code détecté :", barcode);
-                    document.getElementById("barcodeResult").innerText = "✅ Code : " + barcode;
+                    console.log("Code détecté :", barcode);
+                    document.getElementById("barcodeResult").innerText = "Code : " + barcode;
 
                     stopCamera(); // 🛑 Stopper la caméra
                     fetchProductInfo(barcode); // 🌐 Récupérer les infos produit
@@ -68,7 +68,7 @@
             });
         });
 
-        // 📁 Importer une image
+        // Importer une image
         document.getElementById('uploadImage').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -80,7 +80,7 @@
             }
         });
 
-        // ✂️ Initialiser le CropperJS
+        // Initialiser le CropperJS
         function initCropper(imageSrc) {
             const imageElement = document.getElementById('imageToCrop');
             imageElement.src = imageSrc;
@@ -93,7 +93,7 @@
             });
         }
 
-        // ✅ Rogner et scanner l'image
+        // Rogner et scanner l'image
         document.getElementById('crop').addEventListener('click', function() {
             const croppedCanvas = cropper.getCroppedCanvas();
             const croppedImageUrl = croppedCanvas.toDataURL('image/png');
@@ -101,24 +101,24 @@
             scanBarcode(croppedImageUrl);
         });
 
-        // 🔍 Scanner un code-barres depuis une image
+        // Scanner un code-barres depuis une image
         function scanBarcode(imageSrc) {
             const img = new Image();
             img.src = imageSrc;
             img.onload = function () {
                 codeReader.decodeFromImage(img)
                     .then(result => {
-                        document.getElementById("barcodeResult").innerText = "✅ Code : " + result.text;
+                        document.getElementById("barcodeResult").innerText = "Code : " + result.text;
                         fetchProductInfo(result.text);
                     })
                     .catch(err => {
-                        console.error("🚨 Erreur de détection :", err);
-                        document.getElementById("barcodeResult").innerText = "⚠️ Aucun code-barres détecté.";
+                        console.error("Erreur de détection :", err);
+                        document.getElementById("barcodeResult").innerText = "Aucun code-barres détecté.";
                     });
             };
         }
 
-        // 🛑 Stopper la caméra
+        // Stopper la caméra
         function stopCamera() {
             if (videoStream) {
                 videoStream.getTracks().forEach(track => track.stop());
@@ -126,7 +126,7 @@
             document.getElementById("camera").style.display = "none";
         }
 
-        // 🌐 Récupérer les informations du produit
+        // Récupérer les informations du produit
         function fetchProductInfo(barcode) {
             fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`)
                 .then(response => response.json())
@@ -143,12 +143,12 @@
                             document.getElementById("productImage").style.display = "none";
                         }
                     } else {
-                        document.getElementById("barcodeResult").innerText = "⚠️ Produit non trouvé.";
+                        document.getElementById("barcodeResult").innerText = "Produit non trouvé.";
                     }
                 })
                 .catch(error => {
-                    console.error("🚨 Erreur API :", error);
-                    document.getElementById("barcodeResult").innerText = "❌ Erreur de récupération des infos.";
+                    console.error("Erreur API :", error);
+                    document.getElementById("barcodeResult").innerText = "Erreur de récupération des infos.";
                 });
         }
     </script>
