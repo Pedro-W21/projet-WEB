@@ -37,7 +37,7 @@ const AutocompleteSearch = ({base_suggestions, setNewValue}) => {
   // Custom theme for styling
   const theme = {
     container: 'autocomplete-container',
-    suggestionsContainer: 'autocomplete-suggestion',
+    suggestionsContainer: 'autocomplete-suggestions',
     suggestion: 'autocomplete-suggestion',
     input: 'autocomplete-input'
   };
