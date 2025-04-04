@@ -42,3 +42,12 @@ Nouvelles idées :
 - accessibilité sur téléphone
 - pouvoir uploader une photo et faire un call à une API pour lire les codes barres (très compliqué à part si on trouve quelque chose qui fait ça direct)
 - authentification par turne (penser à un cookie pour garder la turne connectée et les items)
+
+## Point 04/04
+Nouvelles idées : 
+- pouvoir modifier la liste de courses rapidement avant de l'envoyer
+- accéder à la caméra sur tel
+- rendre la version tel plus accessible
+- corriger le bug du scan qui get l'inventaire distant et écrase le local
+- avoir les recettes classées par criticalité des ingrédients
+- corriger le bug des recettes qui vérifient pas les quantités
