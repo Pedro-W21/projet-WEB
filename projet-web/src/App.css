@@ -278,6 +278,14 @@ width: 300px;
 
 .popup-content {
   text-align: left;
+  padding: 15px; 
+}
+
+.popup-content h2 {
+  margin: 0 0 15px 0; 
+  padding-left: 15px;
+  font-size: 1.5em;
+  color: #1f3a8a;
 }
 
 .popup button {
@@ -286,7 +294,7 @@ width: 300px;
   border: none;
   background: #1f3a8a;
   color: white;
-  border-radius: 5px;
+  border-radius: 45px;
   cursor: pointer;
   float:right ;
 }
@@ -305,6 +313,22 @@ width: 300px;
   z-index: 999;
 }
 
+
+.remove-button {
+  margin-left: 15px;
+  padding: 5px 15px;
+  float: none;
+  flex-shrink: 0; /* Empêche le bouton de rétrécir pour éviter que ce soit moche quand on rétrécit la fenêtre */
+  width: 150px;   /* Largeur fixe */
+}
+
+.popup-content li {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
 
 .popup-buttons {
   display: flex;
@@ -329,6 +353,7 @@ width: 300px;
 
 .popup-buttons button:first-child {
   background: #4caf50; /* Vert pour le bouton d'envoi */
+  width: 200px;
 }
 
 .popup-buttons button:first-child:hover {

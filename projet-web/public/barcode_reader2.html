@@ -8,10 +8,11 @@
     <!-- Librairies externes -->
     <script src="https://unpkg.com/@zxing/library@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <link rel="stylesheet" href="barcodestyle.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
     <style>
-        video { max-width: 100%; display: block; margin: auto; }
+        video { max-width: 100%; display: relative; margin: auto; margin-top: 20px; }
         #barcodeResult { font-size: 18px; font-weight: bold; text-align: center; margin-top: 10px; }
         #cropper-container { max-width: 300px; margin: auto; display: none; }
         img { max-width: 100%; display: block; margin: auto; }
@@ -21,13 +22,16 @@
 </head>
 <body>
 
-    <h2>Scanner un Code-Barres</h2>
+    <h2>Scanner un Code-Barre</h2>
 
     <!-- Scanner avec la caméra -->
     <button id="startScan">Scanner avec la caméra</button>
 
+    <div class="ou"> ou </div>
+
     <!-- Importer une image -->
-    <input type="file" id="uploadImage" accept="image/*">
+    <input type="file" id="uploadImage" accept="image/*" style="display: none;">
+    <label for="uploadImage" class="custom-file-upload">Importer une image</label>
 
     <video id="camera" autoplay playsinline style="display: none;"></video>
     <p id="barcodeResult">Aucun code détecté...</p>
