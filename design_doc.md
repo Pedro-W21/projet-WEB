@@ -51,3 +51,4 @@ Nouvelles idées :
 - corriger le bug du scan qui get l'inventaire distant et écrase le local
 - avoir les recettes classées par criticalité des ingrédients
 - corriger le bug des recettes qui vérifient pas les quantités
+- arriver à déployer le tout sur un serveur accessible

@@ -47,7 +47,7 @@ const AutocompleteSearch = ({ base_suggestions, value, onChange }) => {
   );
 };
 
-function AddItemForm({ items, onSubmit, onCancel, groupID }) {
+function AddItemForm({ items, onSubmit, onCancel, groupID, setCookies }) {
   const [item, setItem] = useState({
     name: "",
     quantity: 1,
@@ -77,10 +77,15 @@ function AddItemForm({ items, onSubmit, onCancel, groupID }) {
 
   //partie code barre
   const handleCodeBarre = () => {
+
+    const expirationDate = new Date()
+    expirationDate.setSeconds(expirationDate.getSeconds() + 5)
+    setCookies('window', {items:items}, { path: '/', expires:expirationDate})
     const popup = window.open(
       "/barcode_reader2.html",
       "PopupScanner",
-      "width=500,height=600,top=100,left=100"
+      "width=500,height=600,top=100,left=100",
+      false
     );
 
     if (!popup) {

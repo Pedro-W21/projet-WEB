@@ -21,7 +21,7 @@ function App() {
   const [recettes, setRecettes] = React.useState([]);
 
   /* Début vol de : https://clerk.com/blog/setting-and-using-cookies-in-react */
-  const [cookies, setCookie] = useCookies(['user'])
+  const [cookies, setCookie] = useCookies(['user', 'window'])
   /* fin vol de */
   const [showListeCoursesPopup, setShowListeCoursesPopup] = React.useState(false);
   const [groupID, setGroupID] = React.useState("");
@@ -53,9 +53,13 @@ function App() {
     }
   };
 
-  if (cookies.user != undefined && cookies.user.group_id != "" && groupID == "") {
+  if (cookies.user != undefined && cookies.user.group_id != "" && groupID == "" && cookies.window == undefined) {
     setGroupID(cookies.user.group_id);
     fetchInventory(cookies.user.group_id);
+  }
+  else if (cookies.user != undefined && cookies.user.group_id != "" && groupID == "" && cookies.window != undefined) {
+    setGroupID(cookies.user.group_id);
+    setItems(cookies.window.items);
   }
 
   const fetchGroups = async () => {
@@ -227,7 +231,7 @@ function App() {
         <div className = {isLandscape ? "Partie-fonctionnelle" : "Partie-fonctionnelle-vert"}>
           <div className={isLandscape ? "form-column" : "form-column-vert"}>
             <ConnectForm onSubmit={handleGroupConnect} onCancel={handleGroupConnect} groupID={groupID} setGroupID={setGroupID} groups={groups} onChange={fetchGroups}/>
-            <AddItemForm items={items} onSubmit={handleAddItem} onCancel={handleAddItem}/>
+            <AddItemForm items={items} onSubmit={handleAddItem} onCancel={handleAddItem} setCookies={setCookie}/>
           </div>
           <div className={isLandscape ? "Tableau-et-boutons" : "Tableau-et-boutons-vert"}>
             <InventoryTable items={items} setItems={setItems} loading={loading} group={groupID}/>
