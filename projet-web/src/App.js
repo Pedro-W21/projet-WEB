@@ -24,6 +24,7 @@ function App() {
   const [cookies, setCookie] = useCookies(['user'])
   /* fin vol de */
   const [showListeCoursesPopup, setShowListeCoursesPopup] = React.useState(false);
+  const [listeCoursesItems, setListeCoursesItems] = React.useState([]);
   const [groupID, setGroupID] = React.useState("");
   const [groups, setGroups] = React.useState([]);
 
@@ -154,17 +155,15 @@ function App() {
     
   }
 
-  const envoyerListeCourses = () => {
-    const listeCourses = genererListeCourses(items);
-  
-    if (!listeCourses.length) {
+  const envoyerListeCourses = (itemsToSend) => {
+    if (!itemsToSend || !itemsToSend.length) {
       alert("Votre liste de courses est vide !");
       return;
     }
   
     // Formatage du message
     const message = `Liste de Courses :\n` + 
-    listeCourses.map(item => `- ${item.nom} (${item.criticite})`).join("\n");
+    itemsToSend.map(item => `- ${item.nom} (${item.criticite})`).join("\n");
   
     const encodedMessage = encodeURIComponent(message);
   
@@ -212,7 +211,13 @@ function App() {
   };
   
   const handleListeCoursesClick = () => {
+    const itemsListe = genererListeCourses(items);
+    setListeCoursesItems(itemsListe);
     setShowListeCoursesPopup(true);
+  };
+
+  const handleRemoveFromList = (index) => {
+    setListeCoursesItems(prevItems => prevItems.filter((_, i) => i !== index));
   };
 
   const closeListeCoursesPopup = () => {
@@ -267,25 +272,33 @@ function App() {
           </div>
         </>
       )}
-        {showListeCoursesPopup && (
+       {showListeCoursesPopup && (
         <>
-        <div className="popup-overlay" onClick={closeListeCoursesPopup}></div>
+          <div className="popup-overlay" onClick={closeListeCoursesPopup}></div>
           <div className="popup">
             <div className="popup-content">
               <h2>Liste de Courses</h2>
               <ul>
-                {genererListeCourses(items).map((item, index) => (
-                  <li key={index}>{item.nom} ({item.criticite})</li>))}
+                {listeCoursesItems.map((item, index) => (
+                  <li key={index}>{item.nom} ({item.criticite})
+                    <button 
+                      onClick={() => handleRemoveFromList(index)}
+                      className="remove-button">
+                      Enlever de la liste
+                    </button>
+                  </li>
+                ))}
               </ul>
               <div className="popup-buttons">
-                <button onClick={envoyerListeCourses}>Envoyer par WhatsApp ou Email</button>
+                <button onClick={() => envoyerListeCourses(listeCoursesItems)}>
+                  Envoyer par WhatsApp
+                </button>
                 <button onClick={closeListeCoursesPopup}>Fermer</button>
               </div>
             </div>
           </div>
         </>
-        )}
-
+      )}
 
         <footer className="BasDePage">
           <img src={image_logo_insa} alt="logo INSA" className="INSA-logo"/>
