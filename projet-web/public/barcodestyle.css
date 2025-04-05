@@ -1,0 +1,47 @@
+body {
+    color: #1F3A8A;
+    font-family: Segoe UI;
+    text-align: center;
+  }
+
+button {
+    margin-top: 10px;
+    padding: 10px 10px;
+    border: none;
+    background: #1f3a8a;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #7f99e3;
+}
+
+.ou {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.custom-file-upload {
+    padding: 10px 10px;
+    border: none;
+    background: #1f3a8a;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.custom-file-upload:hover {
+    background: #7f99e3;
+}
+
+p {
+    position: relative;
+    padding-top: 30px;
+}
