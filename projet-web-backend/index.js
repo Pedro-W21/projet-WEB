@@ -87,17 +87,11 @@ app.post('/api/inventory', async (req, res) => {
 app.get('/api/inventory/recipes/:group_id', async (req, res) => {
     try {
         const groupId = req.params.group_id;
-        
         if (!groupId) {
             return res.status(400).json({ error: 'Group ID is required' });
         }
 
-        console.log(`Fetching inventory for group ID: ${groupId}`);
-
-        // Fetch only the inventory items for the specified group
         const items = await InventoryItem.find({ group_id: groupId });
-
-        console.log(`Items found for group ${groupId}:`, items);
 
         if (!items.length) {
             return res.json({ message: "Aucun ingrédient disponible dans ce groupe." });
@@ -107,22 +101,41 @@ app.get('/api/inventory/recipes/:group_id', async (req, res) => {
 
         for (const recette in recettes) {
             const ingrédients = recettes[recette]["ingrédients"];
-            let recettePossible = ingrédients.every(ingr => 
+
+            // Check if all ingredients are available in inventory
+            let recettePossible = ingrédients.every(ingr =>
                 items.some(item => item.name.toLowerCase() === ingr.toLowerCase())
             );
 
             if (recettePossible) {
-                recettesDisponibles.push(recette);
+                // Find the earliest expiration date among the matched ingredients
+                let matchedItems = ingrédients.map(ingr =>
+                    items.find(item => item.name.toLowerCase() === ingr.toLowerCase())
+                );
+
+                let earliestDate = matchedItems
+                    .filter(item => item.bestBy) // make sure bestBy is defined
+                    .map(item => new Date(item.bestBy))
+                    .sort((a, b) => a - b)[0] || new Date(8640000000000000); // fallback to far future if no dates
+
+                recettesDisponibles.push({
+                    nom: recette,
+                    dateExpiration: earliestDate
+                });
             }
         }
 
-        console.log(`Recettes disponibles pour ${groupId}:`, recettesDisponibles);
+        // Sort recipes by their earliest ingredient expiration date
+        recettesDisponibles.sort((a, b) => a.dateExpiration - b.dateExpiration);
 
         if (recettesDisponibles.length === 0) {
             return res.json({ message: "Aucune recette trouvée avec les ingrédients disponibles." });
         } else {
-            return res.json({ recettes: recettesDisponibles });
+            return res.json({
+                recettes: recettesDisponibles.map(r => r.nom)
+            });
         }
+
     } catch (err) {
         console.error('Error fetching recipes:', err);
         res.status(500).json({ error: 'Erreur serveur lors de la récupération des recettes.' });
