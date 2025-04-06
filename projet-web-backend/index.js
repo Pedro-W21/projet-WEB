@@ -102,7 +102,6 @@ app.get('/api/inventory/recipes/:group_id', async (req, res) => {
         for (const recette in recettes) {
             const ingrédients = recettes[recette]["ingrédients"];
             const lien = recettes[recette]["lien"];
-            console.log(lien);
 
             // Check if all ingredients are available in inventory
             let recettePossible = ingrédients.every(ingr =>
