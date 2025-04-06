@@ -228,6 +228,13 @@ function App() {
     setShowListeCoursesPopup(false);
   };
 
+  const handleClickDetailRecette = async (index) => {
+    const response = await axios.get(`http://localhost:3000/api/inventory/recipes/${groupID}`);
+    console.log("Données reçues :", response.data); 
+    const lien = response.data.recettes[index].lienRecette;
+    window.open(lien, "_blank");
+  };
+
   return (
       <div className="App">
         <div>
@@ -265,9 +272,15 @@ function App() {
               {recettes.length > 0 ? (
                 <ul>
                   {recettes.map((recette, index) => (
-                    <li key={index}>{recette}</li>
-                  ))}
-                </ul>
+                  <li 
+                  key={index}
+                  onClick={() => handleClickDetailRecette(index)} // Ajoute l'action au clic
+                  style={{ cursor: 'pointer' }} // Change le curseur en main pointant pour indiquer que c'est cliquable
+                >
+                  {recette.nom}
+                </li>                  
+                ))}
+              </ul>
               ) : (
                 <p>Aucune recette disponible avec les ingrédients actuels.</p>
               )}
