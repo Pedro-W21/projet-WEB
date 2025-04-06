@@ -7,7 +7,8 @@
             "jambon",
             "fromage",
             "crème fraîche"
-        ]
+        ],
+        "lien": "https://www.elle.fr/Elle-a-Table/Recettes-de-cuisine/Croque-monsieur-2711932"
     },
     "Pâtes bolognaise":{
         "Temps de préparation": "15 min",
@@ -17,7 +18,8 @@
             "steak haché",
             "coulis de tomate",
             "oignon"
-        ]
+        ],
+        "lien": "https://www.elle.fr/Elle-a-Table/Recettes-de-cuisine/Pates-a-la-bolognaise-minute-2753112"
     },
     "Risotto à la courgette":{
         "Temps de préparation": "30 min",
@@ -28,7 +30,8 @@
             "échalotte",
             "fromage",
             "bouillon"
-        ]
+        ],
+        "lien": "https://www.elle.fr/Elle-a-Table/Recettes-de-cuisine/Risotto-a-la-courgette-et-au-jambon-de-Parme-3929904"
     },
     "Salade de pommes de terre et saumon":{
         "Temps de préparation": "15 min",
@@ -38,7 +41,8 @@
             "courgette",
             "échalotte",
             "saumon"
-        ]
+        ],
+        "lien": "https://www.elle.fr/Elle-a-Table/Recettes-de-cuisine/Salade-de-pommes-de-terre-et-saumon-2025520"
     },
     "Salade niçoise":{
         "Temps de préparation": "25 min",
@@ -50,7 +54,8 @@
             "oeuf",
             "olive",
             "anchois"
-        ]
+        ],
+        "lien": "https://www.elle.fr/Elle-a-Table/Recettes-de-cuisine/Salade-nicoise-2711917"
     },
     "Omelette nature":{
         "Temps de préparation": "5 min",
@@ -60,7 +65,8 @@
             "sel",
             "poivre",
             "beurre"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_omelette-nature_21255.aspx"
     },
     "Toast à l'avocat":{
         "Temps de préparation": "5 min",
@@ -71,7 +77,8 @@
             "sel",
             "poivre",
             "citron"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_quiche-lorraine_30283.aspx"
     },
     "Soupe de légumes":{
         "Temps de préparation": "15 min",
@@ -82,7 +89,8 @@
             "poireau",
             "oignon",
             "bouillon"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_quiche-lorraine_30283.aspx"
     },
     "Tartine tomate-mozzarella":{
         "Temps de préparation": "10 min",
@@ -93,7 +101,8 @@
             "mozzarella",
             "basilic",
             "huile d'olive"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_quiche-lorraine_30283.aspx"
     },
     "Gratin de courgettes":{
         "Temps de préparation": "15 min",
@@ -103,7 +112,8 @@
             "fromage",
             "crème fraîche",
             "oeuf"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_quiche-lorraine_30283.aspx"
     },
     "Smoothie banane-fraise":{
         "Temps de préparation": "5 min",
@@ -113,7 +123,8 @@
             "fraise",
             "lait",
             "miel"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_quiche-lorraine_30283.aspx"
     },
     "Pain perdu":{
         "Temps de préparation": "10 min",
@@ -124,7 +135,8 @@
             "oeuf",
             "sucre",
             "beurre"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_quiche-lorraine_30283.aspx"
     },
     "Salade de fruits":{
         "Temps de préparation": "10 min",
@@ -135,7 +147,8 @@
             "orange",
             "fraise",
             "jus de citron"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_quiche-lorraine_30283.aspx"
     },
     "Wrap poulet crudités":{
         "Temps de préparation": "10 min",
@@ -146,7 +159,8 @@
             "salade",
             "tomate",
             "sauce yaourt"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_quiche-lorraine_30283.aspx"
     },
     "Tartiflette express":{
         "Temps de préparation": "15 min",
@@ -157,6 +171,7 @@
             "lardons",
             "oignon",
             "crème fraîche"
-        ]
+        ],
+        "lien": "https://www.marmiton.org/recettes/recette_quiche-lorraine_30283.aspx"
     }
 }
