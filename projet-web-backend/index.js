@@ -105,7 +105,7 @@ app.get('/api/inventory/recipes/:group_id', async (req, res) => {
 
             // Check if all ingredients are available in inventory
             let recettePossible = ingrédients.every(ingr =>
-                items.some(item => item.name.toLowerCase() === ingr.toLowerCase())
+                items.some(item => item.name.toLowerCase() === ingr.toLowerCase() && item.quantity > 0)
             );
 
             if (recettePossible) {
