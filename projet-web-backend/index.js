@@ -101,6 +101,8 @@ app.get('/api/inventory/recipes/:group_id', async (req, res) => {
 
         for (const recette in recettes) {
             const ingrédients = recettes[recette]["ingrédients"];
+            const lien = recettes[recette]["lien"];
+            console.log(lien);
 
             // Check if all ingredients are available in inventory
             let recettePossible = ingrédients.every(ingr =>
@@ -120,6 +122,7 @@ app.get('/api/inventory/recipes/:group_id', async (req, res) => {
 
                 recettesDisponibles.push({
                     nom: recette,
+                    lienRecette: lien,
                     dateExpiration: earliestDate
                 });
             }
@@ -132,7 +135,7 @@ app.get('/api/inventory/recipes/:group_id', async (req, res) => {
             return res.json({ message: "Aucune recette trouvée avec les ingrédients disponibles." });
         } else {
             return res.json({
-                recettes: recettesDisponibles.map(r => r.nom)
+                recettes: recettesDisponibles
             });
         }
 
