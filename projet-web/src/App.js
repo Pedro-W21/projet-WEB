@@ -40,7 +40,7 @@ function App() {
         right_group = groupID;
       }
       if (right_group != "") {
-        const response = await axios.post('http://localhost:3000/api/group_inventories', {group_id:right_group});
+        const response = await axios.post(`http://${window.location.host}/api/group_inventories`, {group_id:right_group});
         setItems(response.data);
       }
       else {
@@ -65,7 +65,7 @@ function App() {
 
   const fetchGroups = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/groups');
+      const response = await axios.get(`http://${window.location.host}/api/groups`);
       setGroups(response.data);
     } catch (error) {
       console.error('Error fetching groups:', error);
@@ -83,7 +83,7 @@ function App() {
           bestBy: item.bestBy,
           group_id:groupID
         }));
-        await axios.post('http://localhost:3000/api/inventory', {group_id:groupID,items:real_items});
+        await axios.post(`http://${window.location.host}/api/inventory`, {group_id:groupID,items:real_items});
         alert('Inventaire sauvegardé!');
       
       }
@@ -124,7 +124,7 @@ function App() {
         try {
           if (chosen_group != "") {
             console.log([...groups, {group_id:chosen_group}]);
-            await axios.post('http://localhost:3000/api/groups', [...groups, {group_id:chosen_group}]);
+            await axios.post(`http://${window.location.host}/api/groups`, [...groups, {group_id:chosen_group}]);
             setGroups([...groups, {group_id:chosen_group}])
             setGroupID(chosen_group);
             const expirationDate = new Date()
@@ -190,7 +190,7 @@ function App() {
 
         console.log(`Fetching recipes for group ID: ${groupID}`);
 
-        const response = await axios.get(`http://localhost:3000/api/inventory/recipes/${groupID}`);
+        const response = await axios.get(`http://${window.location.host}/api/inventory/recipes/${groupID}`);
 
         console.log('Response:', response.data);
 
@@ -229,7 +229,7 @@ function App() {
   };
 
   const handleClickDetailRecette = async (index) => {
-    const response = await axios.get(`http://localhost:3000/api/inventory/recipes/${groupID}`);
+    const response = await axios.get(`http://${window.location.host}/api/inventory/recipes/${groupID}`);
     console.log("Données reçues :", response.data); 
     const lien = response.data.recettes[index].lienRecette;
     window.open(lien, "_blank");

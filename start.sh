@@ -14,4 +14,4 @@ bash -c "exec -a backend_insapp node projet-web-backend/index.js" &
 cd projet-web
 npm install
 
-npm start
+npm start -- --hostname 0.0.0.0
